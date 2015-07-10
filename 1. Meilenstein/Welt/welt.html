@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Nimmersatts Welt</title>
+	</head>
+	
+	<body>
+		<script src="..\..\Application\seiten\extern\three_js\build\three.min.js">
+		</script>
+		
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var geometry1 = new THREE.PlaneGeometry(14, 14);
+			var material1 = new THREE.MeshBasicMaterial( { color: 0x339900, side: THREE.DoubleSide} );
+			var meadow = new THREE.Mesh( geometry1, material1 );
+			
+			var geometry2 = new THREE.PlaneGeometry(12, 12);
+			var material2 = new THREE.MeshBasicMaterial( { color: 0xCC9900, side: THREE.DoubleSide} );
+			var soil = new THREE.Mesh( geometry2, material2 );
+			
+			scene.add(meadow);
+			scene.add(soil);	
+			soil.rotation.x = -1.57;
+			soil.position.y = 0.10;
+			meadow.rotation.x = -1.57;
+			camera.rotation.x = -0.78;
+			camera.position.y = 10;
+			camera.position.z = 10;
+
+
+			var render = function () {
+				requestAnimationFrame( render );
+				renderer.render(scene, camera);
+			};
+			
+			render();
+		</script>
+	</body>
+</html>

@@ -15,61 +15,65 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry1 = new THREE.PlaneGeometry(224, 56);
-			var material1 = new THREE.MeshBasicMaterial( { color: 0x339900, side: THREE.DoubleSide} );
-			var meadow = new THREE.Mesh( geometry1, material1 );
+			var geometry1 = new THREE.PlaneGeometry(250, 70);
+			var material1 = new THREE.MeshBasicMaterial( { color: "rgb(145, 142, 145)", side: THREE.DoubleSide} );
+			var floor = new THREE.Mesh( geometry1, material1 );
 			
-			var geometry2 = new THREE.PlaneGeometry(75, 24);
-			var material2 = new THREE.MeshBasicMaterial( { color: 0xCC9900, side: THREE.DoubleSide} );
+			var geometry2 = new THREE.BoxGeometry(25, 50, 2);
+			var material2 = new THREE.MeshBasicMaterial({color: "rgb(255, 255, 255)"});
 			var soil = new THREE.Mesh( geometry2, material2 );
 			
-			var geometry3 = new THREE.CubeGeometry(1, 1, 1);
-			var material3 = new THREE.MeshBasicMaterial({color: 0x00ff00});
-			var cube = new THREE.Mesh(geometry3, material3);
+			var geometry3 = new THREE.BoxGeometry(26, 1, 5);
+			var material3 = new THREE.MeshBasicMaterial({ color: "rgb(90, 90, 90)"});
+			var wallup = new THREE.Mesh(geometry3, material3);
 			
-			scene.add(meadow);
-			scene.add(soil);	
-			scene.add(cube);
-			cube.position.y = 0.7;
+			var walldown = new THREE.Mesh(geometry3, material3);
+			
+			var geometry4 = new THREE.BoxGeometry(1, 50, 5);
+			var material4 = new THREE.MeshBasicMaterial({ color: "rgb(90, 90, 90)"});
+			var wallleft = new THREE.Mesh(geometry4, material4);
+			
+			var wallright = new THREE.Mesh(geometry4, material4);
+						
+			scene.add(soil);
+			scene.add(floor);
+			scene.add(wallup);
+			scene.add(walldown);
+			scene.add(wallleft);
+			scene.add(wallright);
+
+			floor.rotation.x = -1.57;
 			soil.rotation.x = -1.57;
-			soil.position.y = 0.1;
-			meadow.rotation.x = -1.57;
+			soil.position.y = 1;
+			wallleft.rotation.x = -1.57;
+			wallleft.position.x = -12.5;
+			wallleft.position.y = 1;
+			wallright.rotation.x = -1.57;
+			wallright.position.x = 12.5;
+			wallright.position.y = 1;
+			walldown.rotation.x = -1.57;
+			walldown.position.z = -25;	
+			walldown.position.y = 1;
+			wallup.rotation.x = -1.57;
+			wallup.position.z = 25;
+			wallup.position.y = 1;
+			
+
 			camera.rotation.x = -0.785;
-			camera.position.y = 18;
-			camera.position.z = 20;
+			camera.position.z = 30;
+			camera.position.y = 15;
+			
+
+		
+
+			
+			
 
 
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
 			};
-			
-			function moveCube(event)
-			{
-				if (event.keyCode == 37)
-				{
-						cube.position.x -= 0.05;
-				}
-				
-				if (event.keyCode == 38)
-				{
-						cube.position.z -= 0.05;
-				}
-				
-				if (event.keyCode == 39)
-				{
-						cube.position.x += 0.05;
-				}
-				
-				if (event.keyCode == 40)
-				{
-						cube.position.z += 0.05;
-				}
-				
-				
-			}
-			
-			window.addEventListener('keypress', moveCube);
 			render();
 		</script>
 	</body>

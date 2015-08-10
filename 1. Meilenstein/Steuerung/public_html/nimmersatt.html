@@ -36,39 +36,30 @@
                         
                 document.onkeydown = function(event) {
                     keyCode = window.event.keyCode; 
-                    keyCode = event.keyCode;
 
                     switch(keyCode) {
         
                     case 37: 
-                    if (direction != 'right') {
-                    direction = 'left';
-                    }
-                     console.log('left'); 
+                    cube.position.x -= 0.01;
+                    
                      break;
 
                     case 39:
-                    if (direction != 'left') {
-                    direction = 'right';
-                    console.log('right');
-                    }
+                    cube.position.x += 0.01;
+                    
                     break;
 
                     case 38:
-                    if (direction != 'down') {
-                    direction = 'up';
-                    console.log('up');
-                    }
+                    cube.position.y -= 0.01;
+                    
                     break;
 
                     case 40:
-                    if (direction != 'up') {
-                    direction = 'down';
-                    console.log('down');
-                    }
+                    cube.position.y += 0.01;
+                    
                     break;
                     }
-                        }
+                }
 		</script>
 	</body>
 </html>

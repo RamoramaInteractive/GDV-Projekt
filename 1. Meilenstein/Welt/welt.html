@@ -4,8 +4,9 @@
 	</head>
 	
 	<body>
-		<script src="..\..\Application\seiten\extern\three_js\build\three.min.js">
+		<script src="..\..\Application\page\extern\three_js\build\three.min.js">
 		</script>
+		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
 		
 		<script>
 			var scene = new THREE.Scene();
@@ -70,6 +71,19 @@
 				renderer.render(scene, camera);
 			};
 			render();
+			
+			document.body.addEventListener("keydown", function (event)
+			{
+				if (event.keyCode == '70')
+				{
+					THREEx.FullScreen.request();
+				}
+			});
+			
+
+			
+			
+			
 		</script>
 	</body>
 </html>

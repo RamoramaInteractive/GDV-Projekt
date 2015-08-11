@@ -34,6 +34,8 @@
 			var wall3 = new THREE.Mesh(geometry4, material4);
 			var wall4 = new THREE.Mesh(geometry4, material4);
 			
+			var geometry5 = new THREE.CylinderGeometry();
+			
 			
 
 						
@@ -69,6 +71,7 @@
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
+				renderer.setSize(window.innerWidth, window.innerHeight);
 			};
 			render();
 			

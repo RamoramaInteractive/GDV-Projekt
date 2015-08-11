@@ -34,10 +34,35 @@
 			var wall3 = new THREE.Mesh(geometry4, material4);
 			var wall4 = new THREE.Mesh(geometry4, material4);
 			
-			var geometry5 = new THREE.CylinderGeometry();
-			
-			
+			var geometry5 = new THREE.CylinderGeometry(0, 5, 10);
+			var material5 = new THREE.MeshBasicMaterial({color: "rgb(0, 153, 0)"});
+			var food = new THREE.Mesh(geometry5, material5);
 
+			function setFood(a, b)
+			{
+				var posit = [];
+				
+				if (a == undefined)
+					a = Math.floor(Math.random() * 2);
+					
+				if (b == undefined)
+					b = Math.floor(Math.random() * 2);
+					
+				if (a == 0)
+					posit[0] = Math.floor(Math.random() * 31);
+				else
+					posit[0] = Math.floor(Math.random() * -31);
+					
+				if (b == 0)
+					posit[1] = Math.floor(Math.random() * 16);
+				else
+					posit[1] = Math.floor(Math.random() * -16);
+				
+				food.position.x = posit[0];
+				food.position.z = posit[1];
+			}	
+
+			setFood();
 						
 			scene.add(soil);
 			scene.add(floor);
@@ -45,8 +70,9 @@
 			scene.add(wall2);
 			scene.add(wall3);
 			scene.add(wall4);
+			scene.add(food);
 			
-
+						
 			floor.rotation.x = -1.57;
 			soil.rotation.x = -1.57;
 			soil.position.y = 1;

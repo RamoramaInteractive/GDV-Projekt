@@ -1,0 +1,134 @@
+<html>
+	<head>
+		<title>Nimmersatts Welt</title>
+	</head>
+	
+	<body>
+		<script src="..\..\Application\page\extern\three_js\build\three.min.js">
+		</script>
+		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
+		<script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
+		<script src="keyboard.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+
+			
+			var geometry2 = new THREE.BoxGeometry(70, 35, 2);
+			var material2 = new THREE.MeshBasicMaterial({color: "rgb(255, 255, 255)"});
+			var soil = new THREE.Mesh( geometry2, material2 );
+
+			
+			var geometry5 = new THREE.CylinderGeometry(0, 1, 1);
+			var material5 = new THREE.MeshBasicMaterial({color: "rgb(0, 153, 0)"});
+			var food = new THREE.Mesh(geometry5, material5);
+
+	/// Code für die Steuerung!!!		
+
+
+        //hinzufügen der Objekte
+	
+	var geometry	= new THREE.CubeGeometry( 3, 3, 3);
+	var material	= new THREE.MeshBasicMaterial({color: "rgb(250, 235, 27)"});
+	var snake	= new THREE.Mesh( geometry, material );
+	
+        scene.add( snake );
+		
+		snake.position.y = 3;
+		food.position.y = 3;
+		// tastaturbewegung
+
+
+	
+			function setFood(a, b)
+			{
+				var posit = [];
+				
+				if (a == undefined)
+					a = Math.floor(Math.random() * 2);
+					
+				if (b == undefined)
+					b = Math.floor(Math.random() * 2);
+					
+				if (a == 0)
+					posit[0] = Math.floor(Math.random() * 31);
+				else
+					posit[0] = Math.floor(Math.random() * -31);
+					
+				if (b == 0)
+					posit[1] = Math.floor(Math.random() * 16);
+				else
+					posit[1] = Math.floor(Math.random() * -16);
+				
+				food.position.x = posit[0];
+				food.position.z = posit[1];
+			}	
+
+			setFood();
+						
+			scene.add(soil);
+			scene.add(food);
+			
+						
+			soil.rotation.x = -1.57;
+			soil.position.y = 1;
+
+		
+			
+
+			camera.rotation.x = -1.57;
+			camera.position.y = 50;
+		
+			
+
+		
+
+			
+			
+
+
+			var render = function () {
+				requestAnimationFrame( render );
+				renderer.render(scene, camera);
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			};
+			render();
+			
+			document.body.addEventListener("keydown", function (event)
+			{
+				if (event.keyCode == '70')
+				{
+					THREEx.FullScreen.request();
+				}
+			});
+			
+
+			document.body.addEventListener("keydown", function (event)
+			{
+				switch (event.keyCode)
+				{
+					case 38:
+							snake.position.z -= 1;
+							break;
+					case 40:
+							snake.position.z += 1;
+							break;
+					case 37:
+							snake.position.x -= 1;
+							break;
+					case 39:
+							snake.position.x += 1;
+							break;
+					default:
+				}
+			});			
+			
+			
+		</script>
+	</body>
+</html>

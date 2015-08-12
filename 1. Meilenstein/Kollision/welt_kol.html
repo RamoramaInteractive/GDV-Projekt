@@ -61,7 +61,7 @@
             var render = function () {
                 requestAnimationFrame(render);
                 renderer.render(scene, camera);
-                update();
+                collision(); 
             };
 
             /*
@@ -94,7 +94,7 @@
 
        
 
-            function update()
+            function collision()
             {
 
                 var originPoint = cube.position.clone();

@@ -4,11 +4,11 @@
     </head>
 
     <body>
-        <script src="..\..\Application\page\extern\three_js\build\three.min.js">
+        <script src="..\..\..\Application\page\extern\three_js\build\three.min.js">
         </script>
-        <script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
-        <script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
-        <script src="kollision.js" type="text/javascript"></script>
+        <script src="..\..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
+        <script src="..\..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
+       
         <script>
             var scene = new THREE.Scene();
             var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -39,91 +39,9 @@
             var material5 = new THREE.MeshBasicMaterial({color: "rgb(0, 153, 0)"});
             var food = new THREE.Mesh(geometry5, material5);
 
-//Code für Kollision
-            var wandaufbau_wo = new THREE.CubeGeometry(2, 5, 40);
-            var wandaufbau_sn = new THREE.CubeGeometry(2, 5, 80);
-            var wandMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-            var wand_w = new THREE.Mesh(wandaufbau_wo, wandMaterial);
-            var wand_o = new THREE.Mesh(wandaufbau_wo, wandMaterial);
-            var wand_n = new THREE.Mesh(wandaufbau_sn, wandMaterial);
-            var wand_s = new THREE.Mesh(wandaufbau_sn, wandMaterial);
+            //Code für Kollision
+          
 
-
-            collisionList.push(wand_w);
-            collisionList.push(wand_o);
-            collisionList.push(wand_n);
-            collisionList.push(wand_s);
-
-
-            scene.add(wand_w);
-            scene.add(wand_o);
-            scene.add(wand_n);
-            scene.add(wand_s);
-
-
-            wand_w.position.x = -34.5;
-            wand_o.position.x = 34.5;
-
-            wand_n.rotation.y = 1.57;
-            wand_n.position.z = -18;
-            wand_s.rotation.y = 1.57;
-            wand_s.position.z = 18;
-/// Code für die Steuerung!!!		
-            var updateFcts = [];
-
-
-//hinzufügen der Objekte
-
-            var geometry = new THREE.CubeGeometry(3, 3, 3);
-            var material = new THREE.MeshBasicMaterial({color: "rgb(250, 235, 27)"});
-            var snake = new THREE.Mesh(geometry, material);
-
-            scene.add(snake);
-
-            snake.position.y = 3;
-
-            // tastaturbewegung
-
-            var keyboard = new THREEx.KeyboardState(renderer.domElement);
-            renderer.domElement.setAttribute("tabIndex", "0");
-            renderer.domElement.focus();
-
-            updateFcts.push(function () {
-                if (keyboard.pressed('left')) {
-                    snake.position.x -= 0.1;
-                } else if (keyboard.pressed('right')) {
-                    snake.position.x += 0.1;
-                }
-                if (keyboard.pressed('down')) {
-                    snake.position.z += 0.1;
-                } else if (keyboard.pressed('up')) {
-                    snake.position.z -= 0.1;
-                }
-            })
-
-//render
-            updateFcts.push(function () {
-                renderer.render(scene, camera);
-            })
-
-//loop runner
-            var lastTimeMsec = null
-            requestAnimationFrame(function animate(nowMsec) {
-                // keep looping
-                requestAnimationFrame(animate);
-                // measure time
-                lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
-                var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
-                lastTimeMsec = nowMsec
-
-// call each update function
-                updateFcts.forEach(function (updateFn) {
-                    updateFn(deltaMsec / 1000, nowMsec / 1000)
-                })
-            })
-
-
-///Ende vom Code der Steuerung!!!
 
             function setFood(a, b)
             {
@@ -159,7 +77,6 @@
             scene.add(wall4);
             scene.add(food);
 
-
             floor.rotation.x = -1.57;
             soil.rotation.x = -1.57;
             soil.position.y = 1;
@@ -168,24 +85,15 @@
             wall3.position.x = 34.5;
             wall4.position.x = -34.5;
 
-
-
             camera.rotation.x = -1.15;
             camera.position.y = 33;
             camera.position.z = 12;
-
-
-
-
-
-
-
 
             var render = function () {
                 requestAnimationFrame(render);
                 renderer.render(scene, camera);
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                collision();
+              
             };
             render();
 
@@ -202,5 +110,8 @@
 
 
         </script>
+         <script src="steuerung.js" type="text/javascript"></script>
+        <script src="kollision.js" type="text/javascript"></script>
+       
     </body>
 </html>

@@ -1,20 +1,40 @@
 <!DOCTYPE html>
+<a href="welt.html"></a>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Start und Gameover</title>
-        <link rel="stylesheet" href="start.css" type="text/css" media="screen">
-        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    </head>
-    <body>
-        <div id="menu">  
-            <li><a href="javascript:void(0)" class="button play">Start Game</a></li>
-            <li><a href="javascript:void(0)" class="button credits">Highscore</a></li>
-            <li><a href="javascript:void(0)" class="button credits">Information</a></li>
-        </div>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Nimmersatt v 1.0</title>
+  <link rel="stylesheet" href="css/start.css" type="text/css" media="screen">
+  <script type="text/javascript" src="jquery.2.1.1.min.js"></script>
+  <script src='js/three.min.js'></script>
+  <script src="js/threex.keyboardstate.js"></script>
+  <script src="js/THREEx.FullScreen.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sound sound-off"></div>
+    <div id="menu">
+      <div id="main">
+          <h2>
+                   <img src="img/Nimmersatt-logo.png" alt="Logo"/>
+          </h2>
+          
+        <ul>
+          <li><a href="javascript:void(0)" class="button play">Start</a></li>
+          <li><a href="javascript:void(0)" class="button credits">Highsocre</a>
+          <li><a href="javascript:void(0)" class="button back">Infomation</a>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+  <script type="text/javascript" src="steuerung.js">
+</body>
 </html>

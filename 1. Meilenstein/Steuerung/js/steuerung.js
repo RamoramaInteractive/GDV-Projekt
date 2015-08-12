@@ -6,8 +6,7 @@
 	/// Code für die Steuerung!!!		
 				var updateFcts	= [];
 
-
-        //hinzufügen der Objekte
+    //hinzufügen der Objekte
 	
 	var geometry	= new THREE.CubeGeometry( 3, 3, 3);
 	var material	= new THREE.MeshBasicMaterial({color: "rgb(250, 235, 27)"});
@@ -15,9 +14,9 @@
 	
         scene.add( snake );
 		
-		snake.position.y = 3;
+		snake.position.y = 10;
 
-		// tastaturbewegung
+	// tastaturbewegung
 	
 	var keyboard	= new THREEx.KeyboardState(renderer.domElement);
 	renderer.domElement.setAttribute("tabIndex", "0");
@@ -44,18 +43,17 @@
 	//loop runner
 	var lastTimeMsec= null
 	requestAnimationFrame(function animate(nowMsec){
-            // keep looping
-            requestAnimationFrame( animate );
-            // measure time
-            lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
-            var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
-            lastTimeMsec	= nowMsec
+    
+    // keep looping
+    requestAnimationFrame( animate );
+    // measure time
+         lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+         var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+         lastTimeMsec	= nowMsec
 	
-        // call each update function
-            updateFcts.forEach(function(updateFn){
-            updateFn(deltaMsec/1000, nowMsec/1000)
-            })
-	})
-	
-	
+    // call each update function
+         updateFcts.forEach(function(updateFn){
+         updateFn(deltaMsec/1000, nowMsec/1000)
+         })
+	})	
 	///Ende vom Code der Steuerung!!!

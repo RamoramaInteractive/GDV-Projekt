@@ -1,17 +1,14 @@
 <html>
 	<head>
 		<title>Nimmersatts Welt</title>
-	</head
+	</head>
+	
 	<body>
-		<script src="..\..\Application\page\extern\three_js\build\three.min.js">
+		<script src="page\extern\three_js\build\three.min.js">
 		</script>
-		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
-		<script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
-                <script src="..\..\Application\page\intern\steuerung.js"></script>
-
+		<script src="page\extern\three_x\THREEx.FullScreen.js"></script>
+		<script src="page\extern\three_x\threex.keyboardstate.js"></script>		
 		<script>
-                    
-                        //Nimmersatts Welt
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
@@ -39,7 +36,9 @@
 			
 			var geometry5 = new THREE.CylinderGeometry(0, 5, 10);
 			var material5 = new THREE.MeshBasicMaterial({color: "rgb(0, 153, 0)"});
-			var food = new THREE.Mesh(geometry5, material
+			var food = new THREE.Mesh(geometry5, material5);
+
+	
 			function setFood(a, b)
 			{
 				var posit = [];
@@ -73,7 +72,6 @@
 			scene.add(wall3);
 			scene.add(wall4);
 			scene.add(food);
-			
 						
 			floor.rotation.x = -1.57;
 			soil.rotation.x = -1.57;
@@ -82,13 +80,10 @@
 			wall2.position.z = 18;
 			wall3.position.x = 34.5;
 			wall4.position.x = -34.5;
-		
-			
 
 			camera.rotation.x = -1.15;
 			camera.position.y = 33;
 			camera.position.z = 12;
-			
 
 			var render = function () {
 				requestAnimationFrame( render );
@@ -104,7 +99,13 @@
 					THREEx.FullScreen.request();
 				}
 			});
-		
+			
+
+			
+			
+			
 		</script>
+				<script src="page\intern\steuerung.js"></script>
+
 	</body>
 </html>

@@ -19,10 +19,11 @@
 	
 	var geometry	= new THREE.CubeGeometry( 1, 1, 1);
 	var material	= new THREE.MeshBasicMaterial({color: 0x00ff00});
-	var mesh	= new THREE.Mesh( geometry, material );
-	
+	var mesh	= new THREE.Mesh( geometry, material );	
         scene.add( mesh );
-        
+         
+        mesh.position.y=10;
+
        
         var light = new THREE.AmbientLight( 0x404040 ); // soft white light
         scene.add( light );

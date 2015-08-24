@@ -7,9 +7,9 @@
 
 var collisionList = []; //Wand 
 
-var wandaufbau_wo = new THREE.CubeGeometry(2, 20, 40);
-var wandaufbau_sn = new THREE.CubeGeometry(2, 20, 80);
-var wandMaterial = new THREE.MeshBasicMaterial({color: 0x009966, transparent: true}); 
+var wandaufbau_wo = new THREE.CubeGeometry(1, 20, 40);
+var wandaufbau_sn = new THREE.CubeGeometry(1, 20, 80);
+var wandMaterial = new THREE.MeshBasicMaterial({color: 0xFF00BF, visible: false}); 
 var wand_w = new THREE.Mesh(wandaufbau_wo, wandMaterial);
 var wand_o = new THREE.Mesh(wandaufbau_wo, wandMaterial);
 var wand_n = new THREE.Mesh(wandaufbau_sn, wandMaterial);
@@ -26,13 +26,14 @@ collisionList.push(wand_s);
 //            scene.add(wand_n);
 //            scene.add(wand_s);
             
-             wand_w.position.x = -34.5;
-            wand_o.position.x = 34.5;
+            wand_w.position.x = -27;
+            wand_o.position.x = 27;
 
             wand_n.rotation.y = 1.57;
-            wand_n.position.z = -18;
+            wand_n.position.z = -12;
+            
             wand_s.rotation.y = 1.57;
-            wand_s.position.z = 18;
+            wand_s.position.z = 16.5;
 
             scene.add(wand_w);
             scene.add(wand_o);

@@ -24,6 +24,42 @@
 		  	</ul>
      </div>
 	</div>
+	<script>
+	
+	var scene = new THREE.Scene();
+	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+	var renderer = new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+	
+	var geometry1 = new THREE.PlaneGeometry(250, 100);
+	var material1 = new THREE.MeshBasicMaterial( { color: "rgb(145, 142, 145)", side: THREE.DoubleSide} );
+	var floor = new THREE.Mesh( geometry1, material1 );
+			
+			
+				var render = function () {
+				requestAnimationFrame( render );
+				renderer.render(scene, camera);
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			};
+			render();
+			
+			document.body.addEventListener("keydown", function (event)
+			{
+				if (event.keyCode == '70')
+				{
+					THREEx.FullScreen.request();
+				}
+			});
+			
+			
+			camera.rotation.x = -1.15;
+			camera.position.y = 33;
+			camera.position.z = 12;
+	</script>
+	
+	
 	
 <!-- //Schlangen Video startet automatisch im Browser noch ohne Sound -->
 	<div id="video">

@@ -58,15 +58,17 @@ function collision()
         var collisionResults = ray.intersectObjects(collisionList);
         if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length())
         {
+            console.log("Es wurde getroffen!");
             //Abhandlungen 1.Versuch
-            if(collisionResults[0] == wand_w )
-            {
-            console.log("Es wurde getroffen!-west"); //DummyVersion 
-            }
-               if(collisionResults[0].distance == wand_s)
-            {
-            console.log("Es wurde getroffen- süd!"); //DummyVersion 
-            }
+//            if(collisionResults[0] == wand_w )
+//            {
+//            console.log("Es wurde getroffen!-west"); //DummyVersion 
+//            }
+//               if(collisionResults[0].distance == wand_s)
+//            {
+//            console.log("Es wurde getroffen- süd!"); //DummyVersion 
+//            }
+//            
             //collisionResults[0].distance == wand_w || wand_o || wand_n || wand_s
         }
 

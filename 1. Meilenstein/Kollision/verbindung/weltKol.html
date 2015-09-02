@@ -43,32 +43,7 @@
           
 
 
-            function setFood(a, b)
-            {
-                var posit = [];
-
-                if (a == undefined)
-                    a = Math.floor(Math.random() * 2);
-
-                if (b == undefined)
-                    b = Math.floor(Math.random() * 2);
-
-                if (a == 0)
-                    posit[0] = Math.floor(Math.random() * 31);
-                else
-                    posit[0] = Math.floor(Math.random() * -31);
-
-                if (b == 0)
-                    posit[1] = Math.floor(Math.random() * 16);
-                else
-                    posit[1] = Math.floor(Math.random() * -16);
-
-                food.position.x = posit[0];
-                food.position.z = posit[1];
-            }
-
-            setFood();
-
+           
             scene.add(soil);
             scene.add(floor);
             scene.add(wall1);

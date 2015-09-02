@@ -39,6 +39,9 @@
 	updateFcts.push(function(){
 		renderer.render( scene, camera );
                 collision();
+                collisionFutter();
+                console.log("Snake "+snake.position.x+" " + snake.position.y +" "+snake.position.z);
+                console.log("Food "+ food.position.x +" "+food.position.y +" "+food.position.z);
 	})
 
 	//loop runner

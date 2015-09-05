@@ -35,9 +35,9 @@
             var wall3 = new THREE.Mesh(geometry4, material4);
             var wall4 = new THREE.Mesh(geometry4, material4);
 
-            var geometry5 = new THREE.CylinderGeometry(0, 5, 10);
-            var material5 = new THREE.MeshBasicMaterial({color: "rgb(0, 153, 0)"});
-            var food = new THREE.Mesh(geometry5, material5);
+        
+			food.receiveShadow = true;
+			food.castShadow = true;
 
             //Code für Kollision
           

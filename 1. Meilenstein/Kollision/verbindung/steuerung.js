@@ -14,7 +14,7 @@
 	
         scene.add( snake );
 		
-		snake.position.y = 10;
+		snake.position.y = 3;
 
 	// tastaturbewegung
 	

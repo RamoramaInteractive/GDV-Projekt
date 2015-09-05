@@ -16,9 +16,9 @@ var wand_o = new THREE.Mesh(wandaufbau_wo, wandMaterial);
 var wand_n = new THREE.Mesh(wandaufbau_sn, wandMaterial);
 var wand_s = new THREE.Mesh(wandaufbau_sn, wandMaterial);
 
-var geometry5 = new THREE.CylinderGeometry(0, 5, 10);
-var material5 = new THREE.MeshBasicMaterial({color: "rgb(0, 153, 0)"});
-var food = new THREE.Mesh(geometry5, material5);
+ var geometry5 = new THREE.CylinderGeometry(0, 1, 3);
+			var material5 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#011607", shininess: 10, shading: THREE.SmoothShading });
+			var food = new THREE.Mesh(geometry5, material5);
 
 collisionList.push(wand_w);
 collisionList.push(wand_o);
@@ -67,7 +67,7 @@ function collisionFutter()
         var directionVector = globalVertex.sub(snake.position);
 
         var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
-        var collisionResults = ray.intersectObjects(collisionList);
+        var collisionResults = ray.intersectObjects(futter);
         if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length())
         {
             setFood();

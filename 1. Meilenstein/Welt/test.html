@@ -15,7 +15,7 @@
 		// Globale Variable für die SetIntervall-Funktion
 			var time;
 			var seconds  = 180;
-			var ding = new Audio("Taito_Carousel.wav");
+			var ding = new Audio("chomp.wav");
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
 			
@@ -158,8 +158,64 @@
 			this.removeCube = function()
 			{
 				scene.remove(this.cube.pop());
-			}
-		}		
+			};
+                        
+                        this.collision = function()
+                        {
+                            for(var i=1; i < this.cube.length; i++)
+                            {
+                                if(this.cube[0].position.x == this.cube[i].position.x && this.cube[0].position.z == this.cube[i].position.z)
+                                {
+                                    //alert("Game Over"); //DummyVersion
+                                    gameOver();
+                                    
+                                    for(var j =0; j < this.cube.length; j++)
+                                    {
+                                        this.cube[j].material.color.setStyle('#a01f12');
+                                        this.cube[j].material.specular.setStyle('#c92a1a');
+                                        this.cube[j].material.emissive.setStyle('#64150d');
+                                    }
+                                 
+                                }
+                            }
+                            
+                        };
+                        
+                        this.teleport = function()
+                        {
+                            if(snake.cube[0].position.x > 35)
+                            {
+                                snake.cube[0].position.x = -33;
+                            }
+                            
+                            if(snake.cube[0].position.x < -35)
+                            {
+                                snake.cube[0].position.x = 33;
+                            }
+                            
+                            if(snake.cube[0].position.z > 17)
+                            {
+                                 snake.cube[0].position.z = -15;
+                            }
+                            
+                            if(snake.cube[0].position.z < -17)
+                            {
+                                snake.cube[0].position.z = 15;
+                            }  
+                        };
+                        
+                        this.eatFood = function()
+                        {
+                             if(snake.cube[0].position.z == food.position.z && snake.cube[0].position.x == food.position.x)
+                            {
+                                setFood();
+                                snake.addCube();
+                                ding.play();
+                            } 
+                        }
+                        
+		}
+                
 
 	var snake = new Snake(scene, 3, 3, "left");
 	snake.generateSnake(3);
@@ -175,6 +231,15 @@
 				
 				food.position.x = food.position.x - (food.position.x % snake.distance);
 				food.position.z = food.position.z - (food.position.z % snake.distance);
+				
+				for (var i = 0; i < snake.cube.length; i++)
+				{
+					if (snake.cube[i].position.x == food.position.x &&
+						snake.cube[i].position.z == food.position.z)
+					{
+						setFood();
+					}						
+				}
 			}	
 	
 			setFood();
@@ -290,10 +355,27 @@
 							break;
 					default:
 				}
-			});		
+			});	
+                        
+                        
+                        
+                        
+                        function gameOver()
+                        {
+                            spielen = false; 
+                           
+                        }
+                        
+                        var spielen = true;
 
 			var time = setInterval(function() {
+                            if(spielen == true)
+                            {
 				snake.move();
+                            }
+                                snake.teleport();
+                                snake.eatFood();
+                                snake.collision();
 			}, seconds);
 			
 			

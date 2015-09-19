@@ -55,40 +55,6 @@
 			pill.position.y = 3;
 			pill.castShadow = true;
 			pill.receiveShadow = true;
-
-	///funktion der Pille
-	function setPill()
-	{							
-	
-			pill.position.x = Math.floor(Math.random() * 67/2) - 33/2;
-			pill.position.z = Math.floor(Math.random() * 31/2) - 15/2;
-	
-			pill.position.x *= snake.distance;
-			pill.position.z *= snake.distance;
-			
-			
-							
-	/*
-		pill.position.x = Math.floor(Math.random() * 67) - 33;
-			pill.position.z = Math.floor(Math.random() * 31) - 15;
-					
-			pill.position.x = pill.position.x - (pill.position.x % snake.distance);
-			pill.position.z = pill.position.z - (pill.position.z % snake.distance);
-				
-			for (var i = 0; i < snake.cube.length; i++)
-				{
-				if (snake.cube[i].position.x == pill.position.x &&
-					snake.cube[i].position.z == pill.position.z)
-				{
-						setPill();
-				}						
-			}
-*/
-			
-	}	
-	
-	
-	setPill();
 	
 			
 	/// Code für die Steuerung!!!		
@@ -407,7 +373,38 @@
 			});	
                         
                         
-                        
+             
+	///funktion der Pille
+	function setPill()
+	{							
+	
+			pill.position.x = Math.floor(Math.random() * 67/2) - 33/2;
+			pill.position.z = Math.floor(Math.random() * 31/2) - 15/2;
+	
+			pill.position.x *= snake.distance;
+			pill.position.z *= snake.distance;
+			
+			
+							
+			pill.position.x = Math.floor(Math.random() * 67) - 33;
+			pill.position.z = Math.floor(Math.random() * 31) - 15;
+					
+			pill.position.x = pill.position.x - (pill.position.x % snake.distance);
+			pill.position.z = pill.position.z - (pill.position.z % snake.distance);
+				
+			for (var i = 0; i < snake.cube.length; i++)
+				{
+				if (snake.cube[i].position.x == pill.position.x &&
+					snake.cube[i].position.z == pill.position.z)
+				{
+						setPill();
+				}						
+			}
+			
+	}	
+	
+	
+	setPill();           
                         
                         function gameOver()
                         {

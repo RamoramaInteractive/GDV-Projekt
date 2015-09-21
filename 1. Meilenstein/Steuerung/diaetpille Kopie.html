@@ -51,6 +51,7 @@
 			var geometry6 = new THREE.SphereGeometry(0.8, 32, 32);
 			var material6 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive:"#095e7a", shininess: 10, shading: THREE.SmoothShading});
 			var pill = new THREE.Mesh( geometry6, material6);
+			scene.add(pill);
 			pill.position.y = 3;
 			pill.castShadow = true;
 			pill.receiveShadow = true;
@@ -59,7 +60,7 @@
 	/// Code für die Steuerung!!!		
 
 
-     //hinzufügen der Objekte
+        //hinzufügen der Objekte
 		var spotLight = new THREE.SpotLight( 0xffffff );
 		spotLight.position.set(-70, 30, 50);
   
@@ -79,8 +80,6 @@
 			this.material = new THREE.MeshPhongMaterial({ color: "#F5B800", specular: "#FFCC33", emissive: "#3d3a06", shininess: 30, shading: THREE.FlatShading });
 			this.distance = distance;
 			this.direction = direction;
-			this.checkcolor = true;
-
 			
 			this.generateSnake = function (length)
 			{
@@ -164,10 +163,7 @@
 			
 			this.removeCube = function()
 			{
-				if(this.cube.length > 3)
-				{
-					scene.remove(this.cube.pop());
-				}
+				scene.remove(this.cube.pop());
 			};
                         
                         this.collision = function()
@@ -228,38 +224,11 @@
                         {
 	                        if(snake.cube[0].position.z == pill.position.z && snake.cube[0].position.x == pill.position.x)
 	                        {
-		                        scene.remove(pill);
+		                        setPill();
 		                        snake.removeCube();
-								snake.removeCube();
-								snake.removeCube();
 		                        ding.play();
-								var changecolor = setInterval(function(){
-									if(this.checkcolor)
-									{
-										this.checkcolor = false;
-										turnblue();	                 
-									}
-									else
-									{
-										this.checkcolor = true;
-										turnyellow();
-									}
-	                        	
-								}, 125);
-								
-								var stopblinking = setInterval(function(){
-									clearInterval(changecolor);
-									clearInterval(stopblinking);
-									turnyellow();
-								}
-								
-								,850);
 	                        }
-                        }   
-                        
-         
-                        
-                                    
+                        }                        
 		}
                 
 
@@ -268,34 +237,8 @@
 	
 	food.position.y = 3;
 	
-
 	
-	/// schlange blau einfärben
-		function turnblue()
-		{
-			for(var i = 0; i < snake.cube.length; i++)
-			{
-				snake.cube[i].material.color.setStyle('#54badc');
-                snake.cube[i].material.specular.setStyle('#7dd5f2');
-                snake.cube[i].material.emissive.setStyle('#095e7a');
-			}
-		}
-		
-				
-	/// schlange gelb einfärben
-		function turnyellow()
-		{
-			for(var i = 0; i < snake.cube.length; i++)
-			{
-				snake.cube[i].material.color.setStyle('#F5B800');
-                snake.cube[i].material.specular.setStyle('#FFCC33');
-                snake.cube[i].material.emissive.setStyle('#3d3a06');
-			}
-		}
-	
-		
-	
-	/// Essen
+		// Essen
 			function setFood()
 			{													
 				food.position.x = Math.floor(Math.random() * 67) - 33;
@@ -307,9 +250,7 @@
 				for (var i = 0; i < snake.cube.length; i++)
 				{
 					if (snake.cube[i].position.x == food.position.x &&
-						snake.cube[i].position.z == food.position.z ||
-						pill.position.x == food.position.x &&
-						pill.position.z == food.position.z)
+						snake.cube[i].position.z == food.position.z)
 					{
 						setFood();
 					}						
@@ -433,9 +374,9 @@
                         
                         
              
-		///funktion der Pille
-			function setPill()
-			{							
+	///funktion der Pille
+	function setPill()
+	{							
 	
 			pill.position.x = Math.floor(Math.random() * 67/2) - 33/2;
 			pill.position.z = Math.floor(Math.random() * 31/2) - 15/2;
@@ -454,9 +395,7 @@
 			for (var i = 0; i < snake.cube.length; i++)
 				{
 				if (snake.cube[i].position.x == pill.position.x &&
-					snake.cube[i].position.z == pill.position.z ||
-					food.position.x == pill.position.x &&
-					food.position.z == pill.position.z)
+					snake.cube[i].position.z == pill.position.z)
 				{
 						setPill();
 				}						
@@ -465,12 +404,13 @@
 	}	
 	
 	
+	setPill();           
                         
-             function gameOver()
-             	{
-                   spielen = false; 
+                        function gameOver()
+                        {
+                            spielen = false; 
                            
-                }
+                        }
                         
                         var spielen = true;
 
@@ -485,12 +425,6 @@
                                 snake.eatPill();
 			}, seconds);
 			
-			
-			var timepill = setInterval(function(){
-						scene.add(pill);
-							setPill();           
-							}, 30000);
-										
 			
 		</script>
 	</body>

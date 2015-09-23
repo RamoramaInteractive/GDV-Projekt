@@ -15,6 +15,7 @@
 			var ding = new Audio("chomp.wav");
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
+			var points = 0;
 			
 			
 			var scene = new THREE.Scene();
@@ -33,6 +34,15 @@
 			};
 			render();
 			
+			var score = document.createElement("div");
+			score.style.top = 100 + "px";
+			score.style.right = 200 + "px";
+			score.style.position = "absolute";
+			score.style.color = "white";
+			score.innerHTML = "Score: " + points;
+			score.style.fontSize = 250 + "%";
+			
+			document.body.appendChild(score);
 		
 			var geometry2 = new THREE.BoxGeometry(70, 35, 2);
 			var material2 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("Holz_Texturs_B_03921.jpg")});
@@ -221,6 +231,8 @@
                                 setFood();
                                 snake.addCube();
                                 ding.play();
+                                points += 20;
+                                score.innerHTML = "Score: " + points; 
                             } 
                         }
                         

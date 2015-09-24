@@ -7,8 +7,7 @@
 		<script src="..\..\Application\page\extern\three_js\build\three.min.js"></script>		
 		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
 		<script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
-                <link rel="stylesheet" href="layout.css">
-                  <h1 id="go"> Game Over </h1>
+                  <link rel="stylesheet" href="layout.css">
 		<script>
 		
 	/// Globale Variable für die SetIntervall-Funktion
@@ -17,6 +16,7 @@
 			var ding = new Audio("chomp.wav");
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
+			var points = 0;
 			
 			
 			var scene = new THREE.Scene();
@@ -34,29 +34,45 @@
 				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
 			};
 			render();
+
 			
+			var skyGeom = new THREE.BoxGeometry(1000, 1000, 1000);
+			var skyMat = new THREE.MeshPhongMaterial({color : "#358b95", specular: "#4abccc", emissive: "#184247", side: THREE.BackSide});
+			var sky = new THREE.Mesh(skyGeom, skyMat);
+			scene.add(sky);
+			
+			var score = document.createElement("div");
+			score.style.top = 100 + "px";
+			score.style.right = 200 + "px";
+			score.style.position = "absolute";
+			score.style.color = "white";
+			score.innerHTML = "Score: " + points;
+			score.style.fontSize = 250 + "%";
+			
+			document.body.appendChild(score);
 		
-			var geometry2 = new THREE.BoxGeometry(70, 35, 2);
-			var material2 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("Holz_Texturs_B_03921.jpg")});
-			var soil = new THREE.Mesh( geometry2, material2 );
+			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
+			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("Holz_Texturs_B_03921.jpg")});
+			var soil = new THREE.Mesh( geometry1, material1 );
 			soil.receiveShadow = true;
 			soil.castShadow = true;
 
 			
-			var geometry5 = new THREE.CylinderGeometry(0, 1, 3);
-			var material5 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#0b6b26", shininess: 10, shading: THREE.SmoothShading });
-			var food = new THREE.Mesh(geometry5, material5);
+			var geometry2 = new THREE.CylinderGeometry(0, 1, 3);
+			var material2 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#0b6b26", shininess: 10, shading: THREE.SmoothShading });
+			var food = new THREE.Mesh(geometry2, material2);
 			food.castShadow = true;
 			food.receiveShadow = true;
 			
 			
-			var geometry6 = new THREE.SphereGeometry(0.8, 32, 32);
-			var material6 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive:"#095e7a", shininess: 10, shading: THREE.SmoothShading});
-			var pill = new THREE.Mesh( geometry6, material6);
+			var geometry3 = new THREE.SphereGeometry(0.8, 32, 32);
+			var material3 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive:"#095e7a", shininess: 10, shading: THREE.SmoothShading});
+			var pill = new THREE.Mesh( geometry3, material3);
 			pill.position.y = 3;
 			pill.castShadow = true;
 			pill.receiveShadow = true;
-	
+			pill.position.x = null;
+			pill.position.z = null;	
 			
 	/// Code für die Steuerung!!!		
 
@@ -223,6 +239,8 @@
                                 setFood();
                                 snake.addCube();
                                 ding.play();
+                                points += 20;
+                                score.innerHTML = "Score: " + points; 
                             } 
                         }
                         
@@ -235,6 +253,8 @@
 								snake.removeCube();
 								snake.removeCube();
 		                        ding.play();
+								pill.position.x = null;
+								pill.position.z = null;
 								var changecolor = setInterval(function(){
 									if(this.checkcolor)
 									{
@@ -471,40 +491,40 @@
              function gameOver()
              	{
                    spielen = false; 
-                
-                   //document.body.appendChild(h2);
-                 document.getElementById("go").style.display = "block";
+                    document.getElementById("go").style.display = "block";
                            
                 }
                         
                         var spielen = true;
-                        
-                   
 
-			
-                         
-                         
 			var time = setInterval(function() {
                             if(spielen == true)
                             {
 				snake.move();
                             }
+								snake.collision();
                                 snake.teleport();
                                 snake.eatFood();
-                                snake.collision();
                                 snake.eatPill();
 			}, seconds);
 			
 			
 			var timepill = setInterval(function(){
-						scene.add(pill);
-							setPill();           
-							}, 30000);
-										
+					if (spielen == true)
+					{
+							setPill(); 
+							scene.add(pill);	
+							
+							var rempill = setInterval(function() {
+								scene.remove(pill);
+								pill.position.x = null;
+								pill.position.z = null;
+								clearInterval(rempill);
+							}, 5000);
+					}
+				}, 30000);
 			
 		</script>
-                
-              
-                
+                 <h1 id="go"> Game Over </h1>
 	</body>
 </html>

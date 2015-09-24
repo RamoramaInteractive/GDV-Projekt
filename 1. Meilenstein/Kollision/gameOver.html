@@ -7,6 +7,7 @@
 		<script src="..\..\Application\page\extern\three_js\build\three.min.js"></script>		
 		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
 		<script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
+                <link rel="stylesheet" href="layout.css">
 		<script>
 		
 	/// Globale Variable für die SetIntervall-Funktion
@@ -469,20 +470,17 @@
              function gameOver()
              	{
                    spielen = false; 
-                    var restart = "Restart";
-                         restart.style.top = 100 + 'px';
-			restart.style.right = 200 + 'px';
-			restart.style.position = 'absolute';
-                        restart.style.color = "white";
-
-                        restart.style.fontSize = 250 + "%"
-                   document.body.appendChild(restart);
+                
+                   //document.body.appendChild(h2);
+                 document.getElementById("go").style.display = "block";
                            
                 }
                         
                         var spielen = true;
                         
-                        
+                   
+
+			
                          
                          
 			var time = setInterval(function() {
@@ -504,5 +502,8 @@
 										
 			
 		</script>
+                
+                <h2 id="go"> Game Over </h2>
+                
 	</body>
 </html>

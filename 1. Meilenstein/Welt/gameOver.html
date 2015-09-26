@@ -4,20 +4,19 @@
 	</head>
 	
 	<body>
-		<script src="..\..\Application\page\extern\three_js\build\three.min.js"></script>
-				
+		<script src="..\..\Application\page\extern\three_js\build\three.min.js"></script>		
 		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
 		<script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
+                  <link rel="stylesheet" href="layout.css">
 		<script>
 		
-		//
-		
-		// Globale Variable für die SetIntervall-Funktion
+	/// Globale Variable für die SetIntervall-Funktion
 			var time;
 			var seconds  = 180;
 			var ding = new Audio("chomp.wav");
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
+			var points = 0;
 			
 			
 			var scene = new THREE.Scene();
@@ -35,26 +34,50 @@
 				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
 			};
 			render();
+
 			
+			var skyGeom = new THREE.BoxGeometry(1000, 1000, 1000);
+			var skyMat = new THREE.MeshPhongMaterial({color : "#358b95", specular: "#4abccc", emissive: "#184247", side: THREE.BackSide});
+			var sky = new THREE.Mesh(skyGeom, skyMat);
+			scene.add(sky);
+			
+			var score = document.createElement("div");
+			score.style.top = 100 + "px";
+			score.style.right = 200 + "px";
+			score.style.position = "absolute";
+			score.style.color = "white";
+			score.innerHTML = "Score: " + points;
+			score.style.fontSize = 250 + "%";
+			
+			document.body.appendChild(score);
 		
-			var geometry2 = new THREE.BoxGeometry(70, 35, 2);
-			var material2 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("Holz_Texturs_B_03921.jpg")});
-			var soil = new THREE.Mesh( geometry2, material2 );
+			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
+			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("Holz_Texturs_B_03921.jpg")});
+			var soil = new THREE.Mesh( geometry1, material1 );
 			soil.receiveShadow = true;
 			soil.castShadow = true;
 
 			
-			var geometry5 = new THREE.CylinderGeometry(0, 1, 3);
-			var material5 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#011607", shininess: 10, shading: THREE.SmoothShading });
-			var food = new THREE.Mesh(geometry5, material5);
+			var geometry2 = new THREE.CylinderGeometry(0, 1, 3);
+			var material2 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#0b6b26", shininess: 10, shading: THREE.SmoothShading });
+			var food = new THREE.Mesh(geometry2, material2);
 			food.castShadow = true;
 			food.receiveShadow = true;
-
+			
+			
+			var geometry3 = new THREE.SphereGeometry(0.8, 32, 32);
+			var material3 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive:"#095e7a", shininess: 10, shading: THREE.SmoothShading});
+			var pill = new THREE.Mesh( geometry3, material3);
+			pill.position.y = 3;
+			pill.castShadow = true;
+			pill.receiveShadow = true;
+			pill.position.x = null;
+			pill.position.z = null;	
 			
 	/// Code für die Steuerung!!!		
 
 
-        //hinzufügen der Objekte
+     //hinzufügen der Objekte
 		var spotLight = new THREE.SpotLight( 0xffffff );
 		spotLight.position.set(-70, 30, 50);
   
@@ -74,6 +97,8 @@
 			this.material = new THREE.MeshPhongMaterial({ color: "#F5B800", specular: "#FFCC33", emissive: "#3d3a06", shininess: 30, shading: THREE.FlatShading });
 			this.distance = distance;
 			this.direction = direction;
+			this.checkcolor = true;
+
 			
 			this.generateSnake = function (length)
 			{
@@ -157,7 +182,10 @@
 			
 			this.removeCube = function()
 			{
-				scene.remove(this.cube.pop());
+				if(this.cube.length > 3)
+				{
+					scene.remove(this.cube.pop());
+				}
 			};
                         
                         this.collision = function()
@@ -211,9 +239,49 @@
                                 setFood();
                                 snake.addCube();
                                 ding.play();
+                                points += 20;
+                                score.innerHTML = "Score: " + points; 
                             } 
                         }
                         
+                        this.eatPill = function()
+                        {
+	                        if(snake.cube[0].position.z == pill.position.z && snake.cube[0].position.x == pill.position.x)
+	                        {
+		                        scene.remove(pill);
+		                        snake.removeCube();
+								snake.removeCube();
+								snake.removeCube();
+		                        ding.play();
+								pill.position.x = null;
+								pill.position.z = null;
+								var changecolor = setInterval(function(){
+									if(this.checkcolor)
+									{
+										this.checkcolor = false;
+										turnblue();	                 
+									}
+									else
+									{
+										this.checkcolor = true;
+										turnyellow();
+									}
+	                        	
+								}, 125);
+								
+								var stopblinking = setInterval(function(){
+									clearInterval(changecolor);
+									clearInterval(stopblinking);
+									turnyellow();
+								}
+								
+								,850);
+	                        }
+                        }   
+                        
+         
+                        
+                                    
 		}
                 
 
@@ -222,8 +290,34 @@
 	
 	food.position.y = 3;
 	
+
 	
-		// Tastaturbewegung
+	/// schlange blau einfärben
+		function turnblue()
+		{
+			for(var i = 0; i < snake.cube.length; i++)
+			{
+				snake.cube[i].material.color.setStyle('#54badc');
+                snake.cube[i].material.specular.setStyle('#7dd5f2');
+                snake.cube[i].material.emissive.setStyle('#095e7a');
+			}
+		}
+		
+				
+	/// schlange gelb einfärben
+		function turnyellow()
+		{
+			for(var i = 0; i < snake.cube.length; i++)
+			{
+				snake.cube[i].material.color.setStyle('#F5B800');
+                snake.cube[i].material.specular.setStyle('#FFCC33');
+                snake.cube[i].material.emissive.setStyle('#3d3a06');
+			}
+		}
+	
+		
+	
+	/// Essen
 			function setFood()
 			{													
 				food.position.x = Math.floor(Math.random() * 67) - 33;
@@ -235,7 +329,9 @@
 				for (var i = 0; i < snake.cube.length; i++)
 				{
 					if (snake.cube[i].position.x == food.position.x &&
-						snake.cube[i].position.z == food.position.z)
+						snake.cube[i].position.z == food.position.z ||
+						pill.position.x == food.position.x &&
+						pill.position.z == food.position.z)
 					{
 						setFood();
 					}						
@@ -358,13 +454,46 @@
 			});	
                         
                         
+             
+		///funktion der Pille
+			function setPill()
+			{							
+	
+			pill.position.x = Math.floor(Math.random() * 67/2) - 33/2;
+			pill.position.z = Math.floor(Math.random() * 31/2) - 15/2;
+	
+			pill.position.x *= snake.distance;
+			pill.position.z *= snake.distance;
+			
+			
+							
+			pill.position.x = Math.floor(Math.random() * 67) - 33;
+			pill.position.z = Math.floor(Math.random() * 31) - 15;
+					
+			pill.position.x = pill.position.x - (pill.position.x % snake.distance);
+			pill.position.z = pill.position.z - (pill.position.z % snake.distance);
+				
+			for (var i = 0; i < snake.cube.length; i++)
+				{
+				if (snake.cube[i].position.x == pill.position.x &&
+					snake.cube[i].position.z == pill.position.z ||
+					food.position.x == pill.position.x &&
+					food.position.z == pill.position.z)
+				{
+						setPill();
+				}						
+			}
+			
+	}	
+	
+	
                         
-                        
-                        function gameOver()
-                        {
-                            spielen = false; 
+             function gameOver()
+             	{
+                   spielen = false; 
+                    document.getElementById("go").style.display = "block";
                            
-                        }
+                }
                         
                         var spielen = true;
 
@@ -373,12 +502,29 @@
                             {
 				snake.move();
                             }
+								snake.collision();
                                 snake.teleport();
                                 snake.eatFood();
-                                snake.collision();
+                                snake.eatPill();
 			}, seconds);
 			
 			
+			var timepill = setInterval(function(){
+					if (spielen == true)
+					{
+							setPill(); 
+							scene.add(pill);	
+							
+							var rempill = setInterval(function() {
+								scene.remove(pill);
+								pill.position.x = null;
+								pill.position.z = null;
+								clearInterval(rempill);
+							}, 5000);
+					}
+				}, 30000);
+			
 		</script>
+                 <h1 id="go"> Game Over </h1>
 	</body>
 </html>

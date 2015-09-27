@@ -1,0 +1,530 @@
+<html>
+	<head>
+		<title>Nimmersatts Welt</title>
+	</head>
+	
+	<body>
+		<script src="..\..\Application\page\extern\three_js\build\three.min.js"></script>		
+		<script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
+		<script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
+                  <link rel="stylesheet" href="layout.css">
+		<script>
+		
+	/// Globale Variable für die SetIntervall-Funktion
+			var time;
+			var seconds  = 180;
+			var ding = new Audio("chomp.wav");
+			var cameraTransVect = new THREE.Vector3(0, 50, 0);
+			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
+			var points = 0;
+			
+			
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.shadowMapEnabled = true;
+			renderer.shadowMapSoft = true;
+			
+			var render = function () {
+				requestAnimationFrame( render );
+				renderer.render(scene, camera);
+				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+			};
+			render();
+
+			
+			var skyGeom = new THREE.BoxGeometry(1000, 1000, 1000);
+			var skyMat = new THREE.MeshPhongMaterial({color : "#358b95", specular: "#4abccc", emissive: "#184247", side: THREE.BackSide});
+			var sky = new THREE.Mesh(skyGeom, skyMat);
+			scene.add(sky);
+			
+			var score = document.createElement("div");
+			score.style.top = 100 + "px";
+			score.style.right = 200 + "px";
+			score.style.position = "absolute";
+			score.style.color = "white";
+			score.innerHTML = "Score: " + points;
+			score.style.fontSize = 250 + "%";
+			
+			document.body.appendChild(score);
+		
+			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
+			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("Holz_Texturs_B_03921.jpg")});
+			var soil = new THREE.Mesh( geometry1, material1 );
+			soil.receiveShadow = true;
+			soil.castShadow = true;
+
+			
+			var geometry2 = new THREE.CylinderGeometry(0, 1, 3);
+			var material2 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#0b6b26", shininess: 10, shading: THREE.SmoothShading });
+			var food = new THREE.Mesh(geometry2, material2);
+			food.castShadow = true;
+			food.receiveShadow = true;
+			
+			
+			var geometry3 = new THREE.SphereGeometry(0.8, 32, 32);
+			var material3 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive:"#095e7a", shininess: 10, shading: THREE.SmoothShading});
+			var pill = new THREE.Mesh( geometry3, material3);
+			pill.position.y = 3;
+			pill.castShadow = true;
+			pill.receiveShadow = true;
+			pill.position.x = null;
+			pill.position.z = null;	
+			
+	/// Code für die Steuerung!!!		
+
+
+     //hinzufügen der Objekte
+		var spotLight = new THREE.SpotLight( 0xffffff );
+		spotLight.position.set(-70, 30, 50);
+  
+		spotLight.castShadow = true;
+		spotLight.shadowDarkness = 0.5;
+		spotLight.shadowCameraNear = 5; 
+		spotLight.shadowCameraFar = 150;
+  
+		scene.add( spotLight );
+		
+
+		function Snake (scene, size, distance, direction)
+		{
+			this.cube = [];
+			this.scene = scene;
+			this.geometry = new THREE.BoxGeometry(size, size, size);
+			this.material = new THREE.MeshPhongMaterial({ color: "#F5B800", specular: "#FFCC33", emissive: "#3d3a06", shininess: 30, shading: THREE.FlatShading });
+			this.distance = distance;
+			this.direction = direction;
+			this.checkcolor = true;
+
+			
+			this.generateSnake = function (length)
+			{
+				for (var i = 0; i < length; i++)
+				{				
+					this.cube[i] = new THREE.Mesh(this.geometry, this.material);
+					
+					if (this.direction == "right")
+					{
+						this.cube[i].position.x = -1 * (i * this.distance);
+						this.cube[i].position.y = 3;
+						this.cube[i].position.z = 0;
+						this.cube[i].castShadow = true;
+						this.cube[i].receiveShadow = false;
+						this.scene.add(this.cube[i]);
+					}
+					else if (this.direction == "left")
+					{
+						this.cube[i].position.x = i * this.distance;
+						this.cube[i].position.y = 3;
+						this.cube[i].position.z = 0;
+						this.cube[i].castShadow = true;
+						this.cube[i].receiveShadow = false;
+						this.scene.add(this.cube[i]);
+					}
+					else if (this.direction == "up")
+					{
+						this.cube[i].position.x = 0;
+						this.cube[i].position.y = 3;
+						this.cube[i].position.z = i * this.distance;
+						this.cube[i].castShadow = true;
+						this.cube[i].receiveShadow = false;
+						this.scene.add(this.cube[i]);
+					}
+					else if (this.direction == "down")
+					{
+						this.cube[i].position.x = 0;
+						this.cube[i].position.y = 3;
+						this.cube[i].position.z = -1 * (i * this.distance);
+						this.cube[i].castShadow = true;
+						this.cube[i].receiveShadow = false;
+						this.scene.add(this.cube[i]);
+					}	
+				}
+			};
+			
+			this.move = function()
+			{
+				for (var i = this.cube.length - 1; i > 0; i--)
+				{
+					this.cube[i].position.x = this.cube[i - 1].position.x;
+					this.cube[i].position.y = this.cube[i - 1].position.y;
+					this.cube[i].position.z = this.cube[i - 1].position.z;
+				}
+				
+					if (this.direction == "right")
+					{
+						this.cube[0].position.x += this.distance;
+					}
+					else if (this.direction == "left")
+					{
+						this.cube[0].position.x -= this.distance;
+					}
+					else if (this.direction == "up")
+					{
+						this.cube[0].position.z -= this.distance;
+					}
+					else if (this.direction == "down")
+					{
+						this.cube[0].position.z += this.distance;
+					}
+			};
+			
+			this.addCube = function ()
+			{
+				this.cube[this.cube.length] = new THREE.Mesh(this.geometry, this.material);
+				this.cube[this.cube.length - 1].castShadow = true;
+				this.cube[this.cube.length - 1].receiveShadow = false;
+				this.scene.add(this.cube[this.cube.length - 1]);
+			};
+			
+			this.removeCube = function()
+			{
+				if(this.cube.length > 3)
+				{
+					scene.remove(this.cube.pop());
+				}
+			};
+                        
+                        this.collision = function()
+                        {
+                            for(var i=1; i < this.cube.length; i++)
+                            {
+                                if(this.cube[0].position.x == this.cube[i].position.x && this.cube[0].position.z == this.cube[i].position.z)
+                                {
+                                    //alert("Game Over"); //DummyVersion
+                                    gameOver();
+                                    
+                                    for(var j =0; j < this.cube.length; j++)
+                                    {
+                                        this.cube[j].material.color.setStyle('#a01f12');
+                                        this.cube[j].material.specular.setStyle('#c92a1a');
+                                        this.cube[j].material.emissive.setStyle('#64150d');
+                                    }
+                                 
+                                }
+                            }
+                            
+                        };
+                        
+                        this.teleport = function()
+                        {
+                            if(snake.cube[0].position.x > 35)
+                            {
+                                snake.cube[0].position.x = -33;
+                            }
+                            
+                            if(snake.cube[0].position.x < -35)
+                            {
+                                snake.cube[0].position.x = 33;
+                            }
+                            
+                            if(snake.cube[0].position.z > 17)
+                            {
+                                 snake.cube[0].position.z = -15;
+                            }
+                            
+                            if(snake.cube[0].position.z < -17)
+                            {
+                                snake.cube[0].position.z = 15;
+                            }  
+                        };
+                        
+                        this.eatFood = function()
+                        {
+                             if(snake.cube[0].position.z == food.position.z && snake.cube[0].position.x == food.position.x)
+                            {
+                                setFood();
+                                snake.addCube();
+                                ding.play();
+                                points += 20;
+                                score.innerHTML = "Score: " + points; 
+                            } 
+                        }
+                        
+                        this.eatPill = function()
+                        {
+	                        if(snake.cube[0].position.z == pill.position.z && snake.cube[0].position.x == pill.position.x)
+	                        {
+		                        scene.remove(pill);
+		                        snake.removeCube();
+								snake.removeCube();
+								snake.removeCube();
+		                        ding.play();
+								pill.position.x = null;
+								pill.position.z = null;
+								var changecolor = setInterval(function(){
+									if(this.checkcolor)
+									{
+										this.checkcolor = false;
+										turnblue();	                 
+									}
+									else
+									{
+										this.checkcolor = true;
+										turnyellow();
+									}
+	                        	
+								}, 125);
+								
+								var stopblinking = setInterval(function(){
+									clearInterval(changecolor);
+									clearInterval(stopblinking);
+									turnyellow();
+								}
+								
+								,850);
+	                        }
+                        }   
+                        
+         
+                        
+                                    
+		}
+                
+
+	var snake = new Snake(scene, 3, 3, "left");
+	snake.generateSnake(3);
+	
+	food.position.y = 3;
+	
+
+	
+	/// schlange blau einfärben
+		function turnblue()
+		{
+			for(var i = 0; i < snake.cube.length; i++)
+			{
+				snake.cube[i].material.color.setStyle('#54badc');
+                snake.cube[i].material.specular.setStyle('#7dd5f2');
+                snake.cube[i].material.emissive.setStyle('#095e7a');
+			}
+		}
+		
+				
+	/// schlange gelb einfärben
+		function turnyellow()
+		{
+			for(var i = 0; i < snake.cube.length; i++)
+			{
+				snake.cube[i].material.color.setStyle('#F5B800');
+                snake.cube[i].material.specular.setStyle('#FFCC33');
+                snake.cube[i].material.emissive.setStyle('#3d3a06');
+			}
+		}
+	
+		
+	
+	/// Essen
+			function setFood()
+			{													
+				food.position.x = Math.floor(Math.random() * 67) - 33;
+				food.position.z = Math.floor(Math.random() * 31) - 15;
+				
+				food.position.x = food.position.x - (food.position.x % snake.distance);
+				food.position.z = food.position.z - (food.position.z % snake.distance);
+				
+				for (var i = 0; i < snake.cube.length; i++)
+				{
+					if (snake.cube[i].position.x == food.position.x &&
+						snake.cube[i].position.z == food.position.z ||
+						pill.position.x == food.position.x &&
+						pill.position.z == food.position.z)
+					{
+						setFood();
+					}						
+				}
+			}	
+	
+			setFood();
+				
+			scene.add(soil);
+			scene.add(food);
+			
+						
+			soil.rotation.x = -1.57;
+			soil.position.y = 1;
+
+			camera.rotation.x = cameraRotVect.x;
+			camera.position.y = cameraTransVect.y;
+			
+			function changeCameraTrans(t1, t2, t3)
+			{
+				cameraTransVect.negate();
+				camera.position.x += cameraTransVect.x;
+				camera.position.y += cameraTransVect.y;
+				camera.position.z += cameraTransVect.z;
+							
+				cameraTransVect.set(t1, t2, t3);
+							
+				camera.position.x = cameraTransVect.x;
+				camera.position.y = cameraTransVect.y;
+				camera.position.z = cameraTransVect.z;
+			}
+
+			function changeCameraRot(r1, r2, r3)
+			{				
+				cameraRotVect.negate();
+				camera.rotation.x += cameraRotVect.x;
+				camera.rotation.y += cameraRotVect.y;
+				camera.rotation.z += cameraRotVect.z;
+							
+				cameraRotVect.set(r1, r2, r3);
+														
+				camera.rotation.x = cameraRotVect.x;
+				camera.rotation.y = cameraRotVect.y;
+				camera.rotation.z = cameraRotVect.z;
+			}
+			
+			document.body.addEventListener("keydown", function (event)
+			{
+				switch (event.keyCode)
+				{
+					case 38:
+					case 87:
+							if (snake.direction != "down")
+								snake.direction = "up";
+							
+							break;
+					case 40:
+					case 88:
+							if (snake.direction != "up")
+								snake.direction = "down";
+							break;
+					case 37:
+					case 65:
+							if (snake.direction != "right")
+								snake.direction = "left";
+							break;
+					case 39:
+					case 68:
+							if (snake.direction != "left")
+								snake.direction = "right";
+							break;
+					case 71:
+					// G
+							THREEx.FullScreen.request();
+							break;
+					case 72:
+					// H
+						if (camera.rotation.z <= 0.785 && camera.position.y == 50)
+						{
+							camera.rotation.z -= -0.01;
+						}
+						else if (camera.position.y == 25)
+						{
+							camera.rotation.y -= -0.01;
+						}
+						break;
+					case 75:
+					// K
+					// Um Y-Achse gegen den Uhrzeigersinn drehen
+						if (camera.rotation.z >= -0.785 && camera.position.y == 50)
+						{
+							camera.rotation.z -= +0.01;
+						}
+						else if (camera.position.y == 25)
+						{
+							camera.rotation.y -= +0.01;
+						}
+						break;
+					case 77:
+					// M
+					// Um X-Achse runter rotieren
+						break;
+					case 85:
+					// U	
+					//Um X-Achse hoch rotieren!
+						break;
+					case 86:
+					// V
+							changeCameraTrans(0, 50, 0);
+							changeCameraRot(-1.57, 0, 0);
+							break;
+					case 66:
+					// B
+
+							changeCameraRot(-0.9, 0, 0);
+							changeCameraTrans(0, 25, 25);
+							break;
+					default:
+				}
+			});	
+                        
+                        
+             
+		///funktion der Pille
+			function setPill()
+			{							
+	
+			pill.position.x = Math.floor(Math.random() * 67/2) - 33/2;
+			pill.position.z = Math.floor(Math.random() * 31/2) - 15/2;
+	
+			pill.position.x *= snake.distance;
+			pill.position.z *= snake.distance;
+			
+			
+							
+			pill.position.x = Math.floor(Math.random() * 67) - 33;
+			pill.position.z = Math.floor(Math.random() * 31) - 15;
+					
+			pill.position.x = pill.position.x - (pill.position.x % snake.distance);
+			pill.position.z = pill.position.z - (pill.position.z % snake.distance);
+				
+			for (var i = 0; i < snake.cube.length; i++)
+				{
+				if (snake.cube[i].position.x == pill.position.x &&
+					snake.cube[i].position.z == pill.position.z ||
+					food.position.x == pill.position.x &&
+					food.position.z == pill.position.z)
+				{
+						setPill();
+				}						
+			}
+			
+	}	
+	
+	
+                        
+             function gameOver()
+             	{
+                   spielen = false; 
+                    document.getElementById("go").style.display = "block";
+                           
+                }
+                        
+                        var spielen = true;
+
+			var time = setInterval(function() {
+                            if(spielen == true)
+                            {
+				snake.move();
+                            }
+								snake.collision();
+                                snake.teleport();
+                                snake.eatFood();
+                                snake.eatPill();
+			}, seconds);
+			
+			
+			var timepill = setInterval(function(){
+					if (spielen == true)
+					{
+							setPill(); 
+							scene.add(pill);	
+							
+							var rempill = setInterval(function() {
+								scene.remove(pill);
+								pill.position.x = null;
+								pill.position.z = null;
+								clearInterval(rempill);
+							}, 5000);
+					}
+				}, 30000);
+			
+		</script>
+                 <h1 id="go"> Game Over </h1>
+	</body>
+</html>

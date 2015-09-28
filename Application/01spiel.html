@@ -186,8 +186,7 @@
 			document.body.appendChild(score);
 		
 			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
-			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("img\myTexture.jpg"), side: THREE.DoubleSide});	
-			var material1a = new THREE.MeshPhongMaterial({color: "#90730f", specular: "#9c7e19", emissive: "#110e02"});	
+			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("myTexture.jpg"), side: THREE.DoubleSide});		
 			
 			var geometry2 = new THREE.CylinderGeometry(0, 1, 3);
 			var material2 = new THREE.MeshPhongMaterial({ color: "#124608", specular: "#248e0e", emissive:"#0b6b26", shininess: 10, shading: THREE.SmoothShading });

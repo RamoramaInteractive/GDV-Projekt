@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nimmersatt v 1.0</title>
+  <link rel="stylesheet" href="css/start.css" type="text/css" media="screen">
+  <script type="text/javascript" src="jquery.2.1.1.min.js"></script>
+  <script src='js/three.min.js'></script>
+  <script src="js/threex.keyboardstate.js"></script>
+  <script src="js/THREEx.FullScr6een.js"></script>
+  <script src="js/threex.videotexture.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sound sound-off"></div>
+    <div id="menu">
+      <div id="main">
+          <h2>
+          	<img src="img/Nimmersatt-logo.png" alt="Logo"/>
+          </h2> 
+		  <ul>
+          	<li><a href="javascript:void(0)" class="button start">Start</a></li>
+		  	</ul>
+     </div>
+	</div>
+	<script>
+	
+	/*
+var videoTexture= new THREEx.VideoTexture("sneakintro.mp4");
+	updateFcts.push(function(delta, now){
+    // to update the texture are every frame
+    videoTexture.update(delta, now)
+	})
+*/
+	
+	
+	var scene = new THREE.Scene();
+	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+	var renderer = new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+	
+	var geometry1 = new THREE.PlaneGeometry(100, 100);
+	var material1 = new THREE.MeshBasicMaterial({ map : videoTexture.texture });
+	var floor = new THREE.Mesh( geometry1, material1 );
+	scene.add(floor);	
+	
+	camera.position.z = 150;
+			
+				var render = function () {
+				requestAnimationFrame( render );
+				renderer.render(scene, camera);
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			};
+			render();
+			
+			document.body.addEventListener("keydown", function (event)
+			{
+				if (event.keyCode == '70')
+				{
+					THREEx.FullScreen.request();
+				}
+			});
+			
+			
+	/*
+		camera.rotation.x = 0;
+			camera.position.y = 0;
+			camera.position.z = 0;
+*/
+	</script>
+	
+	
+	
+//Schlangen Video startet automatisch im Browser noch ohne Sound -->
+	<div id="video">
+	<video autoplay width="500" height="240" controls>
+			<source src="SneakIntro.mp4" type="video/mp4" >
+			<source src="movie.ogg" type="video/ogg" >
+	</video>
+	</div>
+	
+
+
+	
+      <!--
+<div id="logosnake">
+            <img src="psd-datei-snake/Nimmersatt-snake.png" alt="Logo"/>
+	  </div>
+	  	  		  	
+<!-- 	 <script type="text/javascript" src="steuerung.js"> -->
+
+</body>
+</html>

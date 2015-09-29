@@ -151,7 +151,6 @@
                                 this.spearHit == true)
                         {
                             snake.loose();
-                            this.spearSpeed = 0;
                         }
                     }
                 };
@@ -245,11 +244,6 @@
                         steine[i].position.y -= 0.1;
                         steine[i].rotation.z += 0.02;
                         steine[i].rotation.y += 0.01;
-                    }
-                    else
-                    {
-                        scene.remove(steine[i]);
-                        steine[i].position.y = 50;
                     }
                 }
             }
@@ -393,8 +387,6 @@
                     {
                         if (this.cube[0].position.x == this.cube[i].position.x && this.cube[0].position.z == this.cube[i].position.z)
                         {
-                            //alert("Game Over"); //DummyVersion
-
                             this.loose();
                         }
                     }
@@ -723,6 +715,18 @@
                     var timeStone = setInterval(function ()
                     {
                         fallStone();
+						
+						if (steine[0].position.y <= 2)
+						{
+							steine[0].position.y = 50;
+							steine[1].position.y = 50;
+							steine[2].position.y = 50;
+							scene.remove(steine[0]);
+							scene.remove(steine[1]);
+							scene.remove(steine[2]);							
+							clearInterval(timeStone);
+						}
+						
                     }, 1000 / 60);
                 }
 
@@ -737,9 +741,12 @@
             render();
 
             var spear = function () {
-                requestAnimationFrame(spear);
-                trap.move(snake);
-                trap.cylinder.position.x += 1;
+				if (spielen == true)
+				{
+					requestAnimationFrame(spear);
+					trap.move(snake);
+					trap.cylinder.position.x += 1;
+				}
             };
             spear();
         </script>

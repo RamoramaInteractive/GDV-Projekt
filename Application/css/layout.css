@@ -1,17 +1,22 @@
- #go{
+
+#go
+{
     position: absolute; 
     color:red;
     display: none;
-   top:45%;
-    left: 45%;
-    
-   
-    
+	top:45%;
+    left: 45%;    
 }
 
-#button{
-     position: absolute; 
-    display: none;
+#button
+{
+    position: absolute; 
+	display: none;
     top:55%;
     left: 46%;
 }
+
+body
+{
+	background-color: #8c5e21;
+}    

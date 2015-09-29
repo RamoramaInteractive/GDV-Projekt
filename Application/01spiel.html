@@ -31,12 +31,11 @@
 			document.body.appendChild( renderer.domElement );
 			renderer.shadowMapEnabled = true;
 			renderer.shadowMapSoft = true;
-			
-			
 			backgroundsound1.play();
-/*
-	Hier fängt jetzt die Speerfalle an!
-*/		
+			
+
+	///Hier fängt jetzt die Speerfalle an!
+		
    /*
              
 	function SpearTrap (scene)
@@ -210,7 +209,7 @@
 	/// Code für die Steuerung!!!		
 
 
-     //hinzufügen der Objekte
+    ///hinzufügen der Objekte
      	
 		var spotLight = new THREE.SpotLight( 0xffffff,2.0 );
 		spotLight.position.set(60, 50, 20);
@@ -341,7 +340,8 @@
                         {
                             for(var i=1; i < this.cube.length; i++)
                             {
-                                if(this.cube[0].position.x == this.cube[i].position.x && this.cube[0].position.z == this.cube[i].position.z)
+                                if(this.cube[0].position.x == this.cube[i].position.x && 				
+                                this.cube[0].position.z == this.cube[i].position.z)
                                 {
                                     //alert("Game Over"); //DummyVersion
 
@@ -383,8 +383,30 @@
                                 ding.play();
                                 points += 20;
                                 score.innerHTML = "Score: " + points; 
+                                var changecolor = setInterval(function(){
+									if(this.checkcolor)
+									{
+										this.checkcolor = false;
+										turngreen();	                 
+									}
+									else
+									{
+										this.checkcolor = true;
+										turnyellow();
+									}
+	                        	
+								}, 125);
+								
+								var stopblinking = setInterval(function(){
+									clearInterval(changecolor);
+									clearInterval(stopblinking);
+									turnyellow();
+								}
+								
+								,350);
                             } 
-                        }
+                            levelup();
+                        };
                         
                         this.eatPill = function()
                         {
@@ -449,6 +471,17 @@
 			board.castShadow = true;	
 			//board.material = material1;
 			scene.add(board);	
+			
+	/// Level up
+		function levelup()
+		{
+			if(points ==100)
+			{
+					alert("hat funktioniert");
+					clearInterval(levelInt);		
+			}	
+		
+		}
 	
 	/// schlange blau einfärben
 		function turnblue()
@@ -460,8 +493,17 @@
                 snake.cube[i].material.emissive.setStyle('#095e7a');
 			}
 		}
-		
 				
+	///schlange grün einfärben
+		function turngreen()
+		{
+			for(var i = 0; i < snake.cube.length; i++)
+			{
+			snake.cube[i].material.color.setStyle('#124608');
+            snake.cube[i].material.specular.setStyle('#248e0e');
+            snake.cube[i].material.emissive.setStyle('#0b6b26');
+			}
+		}
 	/// schlange gelb einfärben
 		function turnyellow()
 		{
@@ -490,6 +532,7 @@
 						snake.cube[i].position.z == food.position.z ||
 						pill.position.x == food.position.x &&
 						pill.position.z == food.position.z )
+						
 						
 				/*
 		||
@@ -648,12 +691,12 @@
 */)
 				{
 						setPill();
-				}						
+				}							
 			}
 			
 	}	
 	
-	
+	/// spiel geht zu Ende		
                         
              function gameOver()
              	{
@@ -696,8 +739,16 @@
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
 				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
-			};
-			render();	
+				
+				if(backgroundsound1.currentTime==21120)
+				{
+					backgroundsound1.currentTime=0;
+				}
+				}
+				
+				render();	
+			
+			
 			
 /*
 			var spear = function () {

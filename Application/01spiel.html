@@ -17,6 +17,7 @@
 			var seconds  = 180;
 			var ding = new Audio("sound/chomp.wav");
 			var pillesound = new Audio("sound/pille.mp3");
+			var backgroundsound1 = new Audio("sound/spiel1.mp3");
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
 			var points = 0;
@@ -30,7 +31,9 @@
 			document.body.appendChild( renderer.domElement );
 			renderer.shadowMapEnabled = true;
 			renderer.shadowMapSoft = true;
-
+			
+			
+			backgroundsound1.play();
 /*
 	Hier fängt jetzt die Speerfalle an!
 */		
@@ -171,7 +174,7 @@
 */
 			
 			var skyGeom = new THREE.BoxGeometry(1000, 1000, 1000);
-			var skyMat = new THREE.MeshPhongMaterial({color : "#358b95", specular: "#4abccc", emissive: "#184247", side: THREE.BackSide});
+			var skyMat = new THREE.MeshPhongMaterial({color : "#0bc236", specular: "#c8ecd0", emissive: "#089329", side: THREE.BackSide});
 			var sky = new THREE.Mesh(skyGeom, skyMat);
 			scene.add(sky);
 			
@@ -208,8 +211,9 @@
 
 
      //hinzufügen der Objekte
-		var spotLight = new THREE.SpotLight( 0xffffff );
-		spotLight.position.set(-70, 30, 50);
+     	
+		var spotLight = new THREE.SpotLight( 0xffffff,2.0 );
+		spotLight.position.set(60, 50, 20);
   
 		spotLight.castShadow = true;
 		spotLight.shadowDarkness = 0.5;
@@ -705,6 +709,6 @@
 */
 		</script>
                  <h1 id="go"> Verloren </h1>
-                 <button id="button" onclick="">Erneut spielen</button>
+                 <button id="button" onclick="window.location.href='01spiel.html'">Erneut spielen</button>
 	</body>
 </html>

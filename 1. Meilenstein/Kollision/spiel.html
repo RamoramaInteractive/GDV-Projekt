@@ -28,28 +28,28 @@
             document.body.appendChild(renderer.domElement);
             renderer.shadowMapEnabled = true;
             renderer.shadowMapSoft = true;
-            
-                 /*Umgebung*/
+
+            /*Umgebung*/
 
             loader = new THREE.JSONLoader();
             var mesh;
             loader.load('Hyophorbe Lagenicaulis Short/Hyophorbe_lagenicaulis.obj', function (geometry, materials) {
-            var material = new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('Hyophorbe Lagenicaulis Short/Hyophorbe_Lagenicaulis_Short/Hyophorbe_lagenicaulis_dif.jpg'),
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('Hyophorbe Lagenicaulis Short/Hyophorbe_Lagenicaulis_Short/Hyophorbe_lagenicaulis_dif.jpg'),
                     colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
                     colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
                     colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
+                });
+                mesh = new THREE.Mesh(
+                        geometry,
+                        material
+                        );
+
+                mesh.position.y = 3;
+                scene.add(mesh);
+                render();
+
             });
-                    mesh = new THREE.Mesh(
-                            geometry,
-                            material
-                );
-    
-            mesh.position.y = 3;
-        scene.add(mesh);
-         render(); 
-    
-    });
 
             /*
              Hier fängt jetzt die Speerfalle an!
@@ -211,7 +211,13 @@
             steine[1] = new THREE.Mesh(steinGeom, steinMat);
             steine[2] = new THREE.Mesh(steinGeom, steinMat);
 
-
+            steine[0].castShadow = true ;
+            steine[1].castShadow = true;
+            steine[2].castShaow = true;
+            
+            steine[0].receiveShadow = true;
+            steine[1].receiveShadow = true;
+            steine[2].receiveShadow = true;
 
             function setStone()
             {
@@ -227,25 +233,25 @@
 
                 }
             }
-            
+
 
 
             function fallStone()
             {
-                for(var i=0;i<steine.length;i++)
+                for (var i = 0; i < steine.length; i++)
                 {
-                if (steine[i].position.y >= 2)
-                {
-                    steine[i].position.y -= 0.1;
-                    steine[i].rotation.z += 0.02;
-                    steine[i].rotation.y += 0.01;
+                    if (steine[i].position.y >= 2)
+                    {
+                        steine[i].position.y -= 0.1;
+                        steine[i].rotation.z += 0.02;
+                        steine[i].rotation.y += 0.01;
+                    }
+                    else
+                    {
+                        scene.remove(steine[i]);
+                        steine[i].position.y = 50;
+                    }
                 }
-                else
-                {
-                    scene.remove(steine[i]);
-                    steine[i].position.y = 50;
-                }
-            }
             }
 
 
@@ -394,21 +400,21 @@
                     }
 
                 };
-                
-                this.stoneCollision = function()
+
+                this.stoneCollision = function ()
                 {
-                    for(var i = 1; i<this.cube.length; i++)
+                    for (var i = 1; i < this.cube.length; i++)
                     {
-                        for (var j =0; j<steine.length;j++)
+                        for (var j = 0; j < steine.length; j++)
                         {
-                            if(this.cube[i].position.x == steine[j].position.x && this.cube[i].position.z == steine[j].position.z && steine[j].position.y > 0 && steine[j].position.y < 3)
+                            if (this.cube[i].position.x == steine[j].position.x && this.cube[i].position.z == steine[j].position.z && steine[j].position.y > 0 && steine[j].position.y < 3)
                             {
-                               this.loose();
+                                this.loose();
                             }
                         }
                     }
                 }
-                
+
                 this.teleport = function ()
                 {
                     if (snake.cube[0].position.x > 35)

@@ -1,4 +1,3 @@
-
 #go
 {
     position: absolute; 
@@ -20,3 +19,12 @@ body
 {
 	background-color: #8c5e21;
 }    
+
+#win
+{
+	position: absolute; 
+    color:green;
+	top:45%;
+    left: 45%; 
+	display: none;
+}

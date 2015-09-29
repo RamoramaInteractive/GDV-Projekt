@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="css\layout.css">
 		<script>
 		
-	/// Globale Variable für die SetIntervall-Funktion
+		/// Globale Variable für die SetIntervall-Funktion
 			var time;
 			var seconds  = 180;
 			var ding = new Audio("sound/chomp.wav");
@@ -34,7 +34,7 @@
 			backgroundsound1.play();
 			
 
-	///Hier fängt jetzt die Speerfalle an!
+		///Hier fängt jetzt die Speerfalle an!
 		
    /*
              
@@ -206,10 +206,10 @@
 			pill.position.x = null;
 			pill.position.z = null;	
 			
-	/// Code für die Steuerung!!!		
+		/// Code für die Steuerung!!!		
 
 
-    ///hinzufügen der Objekte
+   		 ///hinzufügen der Objekte
      	
 		var spotLight = new THREE.SpotLight( 0xffffff,2.0 );
 		spotLight.position.set(60, 50, 20);
@@ -451,8 +451,8 @@
 	
 	food.position.y = 3;
 
-	/// fallen platzierung 
-	/* placeTrap(trap, snake, food, pill);	 */
+		/// fallen platzierung 
+		/* placeTrap(trap, snake, food, pill);	 */
 	
 			var board = new THREE.Mesh(geometry1, material1);
 	
@@ -472,18 +472,18 @@
 			//board.material = material1;
 			scene.add(board);	
 			
-	/// Level up
+		/// Level up
 		function levelup()
 		{
 			if(points ==100)
 			{
-					alert("hat funktioniert");
-					clearInterval(levelInt);		
+				gewonnen();
+				clearInterval(levelInt);		
 			}	
 		
 		}
 	
-	/// schlange blau einfärben
+		/// schlange blau einfärben
 		function turnblue()
 		{
 			for(var i = 0; i < snake.cube.length; i++)
@@ -494,7 +494,7 @@
 			}
 		}
 				
-	///schlange grün einfärben
+		///schlange grün einfärben
 		function turngreen()
 		{
 			for(var i = 0; i < snake.cube.length; i++)
@@ -504,7 +504,7 @@
             snake.cube[i].material.emissive.setStyle('#0b6b26');
 			}
 		}
-	/// schlange gelb einfärben
+		/// schlange gelb einfärben
 		function turnyellow()
 		{
 			for(var i = 0; i < snake.cube.length; i++)
@@ -517,7 +517,7 @@
 	
 		
 	
-	/// Essen
+		/// Essen
 			function setFood()
 			{													
 				food.position.x = Math.floor(Math.random() * 67) - 33;
@@ -696,18 +696,28 @@
 			
 	}	
 	
-	/// spiel geht zu Ende		
-                        
+		/// Spieler verliert	          
              function gameOver()
              	{
                    spielen = false; 
-                    document.getElementById("go").style.display = "block";
-                     document.getElementById("button").style.display = "block";
+                   document.getElementById("go").style.display = "block";
+                   document.getElementById("button").style.display = "block";
                            
                 }
                         
-                        var spielen = true;
+                var spielen = true;
+                        
+         /// Spieler gewinnt			          
+             function gewonnen()
+             	{
+                   spielen = false; 
+                   document.getElementById("win").style.display = "block";
+                   document.getElementById("button").style.display = "block";              
+                }
+                var spielen = true;
 
+                        
+		/// Ständiger bewegungsmechanismus der Schlange
 			var time = setInterval(function() {
                             if(spielen == true)
                             {
@@ -718,7 +728,8 @@
                                 snake.eatFood();
                                 snake.eatPill();
 			}, seconds);
-			
+			            		
+		/// Pille wird alle .. Sek. angezeigt	
 			
 			var timepill = setInterval(function(){
 					if (spielen == true)
@@ -759,7 +770,11 @@
 			spear();
 */
 		</script>
-                 <h1 id="go"> Verloren </h1>
-                 <button id="button" onclick="window.location.href='01spiel.html'">Erneut spielen</button>
+        <h1 id="go">Verloren</h1>
+        <button id="button" onclick="window.location.href='01spiel.html'">Erneut spielen</button>
+                 
+		<h1 id="win">Gewonnen</h1>
+		<button id="button" onclick="window.location.href='01spiel.html'">Nächstes Spiel</button>
+
 	</body>
 </html>

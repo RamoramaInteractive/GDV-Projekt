@@ -242,6 +242,7 @@
 			this.material = new THREE.MeshPhongMaterial({ color: "#F5B800", specular: "#FFCC33", emissive: "#3d3a06", shininess: 30, shading: THREE.FlatShading });
 			this.distance = distance;
 			this.direction = direction;
+			this.movingDir = direction;
 			this.checkcolor = true;
 
 			
@@ -299,22 +300,28 @@
 					this.cube[i].position.z = this.cube[i - 1].position.z;
 				}
 				
-					if (this.direction == "right")
-					{
-						this.cube[0].position.x += this.distance;
-					}
-					else if (this.direction == "left")
-					{
-						this.cube[0].position.x -= this.distance;
-					}
-					else if (this.direction == "up")
-					{
-						this.cube[0].position.z -= this.distance;
-					}
-					else if (this.direction == "down")
-					{
-						this.cube[0].position.z += this.distance;
-					}
+					if ((this.direction == "down" && this.movingDir != "up")
+						|| (this.direction == "up" && this.movingDir != "down")
+						|| (this.direction == "left" && this.movingDir != "right")
+						|| (this.direction == "right" && this.movingDir != "left"))
+							this.movingDir = this.direction;
+							
+					if (this.movingDir == "right")
+                    {
+                        this.cube[0].position.x += this.distance;
+                    }
+                    else if (this.movingDir == "left")
+                    {
+                        this.cube[0].position.x -= this.distance;
+                    }
+                    else if (this.movingDir == "up")
+                    {
+                        this.cube[0].position.z -= this.distance;
+                    }
+                    else if (this.movingDir == "down")
+                    {
+                        this.cube[0].position.z += this.distance;
+                    }
 			};
 			
 			this.addCube = function ()
@@ -599,25 +606,20 @@
 				switch (event.keyCode)
 				{
 					case 38:
-					case 87:
-							if (snake.direction != "down")
-								snake.direction = "up";
-							
+                    case 87:
+							snake.direction = "up";
 							break;
-					case 40:
-					case 88:
-							if (snake.direction != "up")
-								snake.direction = "down";
+                    case 40:
+                    case 83:
+							snake.direction = "down";
 							break;
-					case 37:
-					case 65:
-							if (snake.direction != "right")
-								snake.direction = "left";
+                    case 37:
+                    case 65:
+							snake.direction = "left";
 							break;
-					case 39:
-					case 68:
-							if (snake.direction != "left")
-								snake.direction = "right";
+                    case 39:
+                    case 68:
+							snake.direction = "right";
 							break;
 					case 71:
 					// G
@@ -731,7 +733,7 @@
 			var time = setInterval(function() {
                             if(spielen == true)
                             {
-				snake.move();
+								snake.move();
                             }
 								snake.collision();
                                 snake.teleport();

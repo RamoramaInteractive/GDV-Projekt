@@ -33,24 +33,50 @@
 
             loader = new THREE.JSONLoader();
             var mesh;
-            loader.load('Hyophorbe Lagenicaulis Short/Hyophorbe_lagenicaulis.obj', function (geometry, materials) {
+            loader.load('Hyophorbe Lagenicaulis Short/Baum.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
                     map: THREE.ImageUtils.loadTexture('Hyophorbe Lagenicaulis Short/Hyophorbe_Lagenicaulis_Short/Hyophorbe_lagenicaulis_dif.jpg'),
-                    colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
-                    colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
-                    colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
+//                   colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
+//                    colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
+//                    colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
                 });
-                mesh = new THREE.Mesh(
-                        geometry,
-                        material
-                        );
+//                baum = new THREE.Mesh(
+//                        geometry,
+//                        material
+//                        );
+//               
+//
+//                baum.position.y = 3;
+//                baum.position.x = 35;
+//                baum.scale.x =baum.scale.y = baum.scale.z =0.1;
+            
 
-                mesh.position.y = 3;
-                scene.add(mesh);
-                render();
-
+//                scene.add(baum);
+        
+                 
+                function erzeugeBaum(posx,posz)
+                {
+                   
+                        baueme = new THREE.Mesh(geometry,material);
+                        
+                        baueme.position.x = posx;
+                        baueme.position.z = posz;
+                        baueme.position.y = 3;
+                        baueme.scale.x =baueme.scale.y = baueme.scale.z =0.1;
+            
+                        scene.add(baueme);
+                    
+                };
+                    erzeugeBaum(40,0);
+                    erzeugeBaum(37,15);
+                    erzeugeBaum(37,-20);
+                    erzeugeBaum(0,-20);
+                    erzeugeBaum(19,-23);
+                    erzeugeBaum(-15,-23);
+                    erzeugeBaum(-40,0);
+                    erzeugeBaum(-37,10);
+                    erzeugeBaum(-38,-15);
             });
-
             /*
              Hier fängt jetzt die Speerfalle an!
              */

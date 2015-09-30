@@ -1,3 +1,5 @@
+
+/* Buttons */
 * {
     margin: 0;
     padding: 0;
@@ -158,4 +160,25 @@
 		bottom: 40%;
 		display: none;
 	}
+
+/* Box für Menü */
+
+	#transbox{
+		position: absolute;
+		left: 570px;
+/* 		padding: 20px; */
+		padding-left: 60px;
+		padding-right: 60px;
+		background-color: #ffffff;
+		border: 0px solid black;
+		opacity:0.6;
+		filter:alpha(opacity=60); /* For IE8 and earlier */
+	}
+	
+	#ton{
+position: relative;	}
+
+
+
+
 

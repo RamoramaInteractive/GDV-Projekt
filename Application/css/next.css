@@ -93,16 +93,6 @@
 		transform: rotate(-360deg);
 	}
 
-	a.red {
-		background-color: rgba(50,126,240,1);
-		color: rgba(0,0,0,1);
-		border-color: rgba(50,126,240,1);
-	}
-
-	a.red:hover {
-		color: rgba(50,126,240,1);
-	}
-
 	a.green {
 		background-color: rgba(25,181,20,0.7);
 		color: rgba(0,0,0,1);
@@ -113,15 +103,7 @@
 		color: rgba(25,181,20,0.7);
 	}
 
-	a.yellow {
-		background-color: rgba(252,227,1,1);
-		color: rgba(0,0,0,1);
-		border-color: rgba(153,38,0,.2);
-	}
 
-	a.yellow:hover {
-		color: rgba(252,227,1,1);
-	}
 
 	.round span.round {
 		display: block;
@@ -148,21 +130,32 @@
 	.green span {
 		background: rgba(25,181,20,0.7);		
 	}
-
-	.red span {
-		background: rgba(50,126,240,1);		
-	}
-
-	.yellow span {
-		background: rgba(161,145,0,.7);	
-
+	
+	#gewinner{
+		position: absolute;
+		left: 45%;
+		bottom: 40%;
+		display: none;
 	}
 	
-	#logo{
-
-
-float: inherit;
-margin: auto;
-padding: inherit;
-		
+	a.red {
+		background-color: rgba(248,17,28,1);
+		color: rgba(0,0,0,1);
+		border-color: rgba(248,17,28,1);
 	}
+
+	a.red:hover {
+		color: rgba(248,17,28,1);
+	}
+	
+	.red span {
+		background: rgba(248,52,37,1);		
+	}
+	
+	#verlierer{
+		position: absolute;
+		left: 45%;
+		bottom: 40%;
+		display: none;
+	}
+

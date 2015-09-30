@@ -8,8 +8,15 @@
 		<script src="page\extern\three_js\build\three.min.js"></script>		
 		<script src="page\extern\three_x\THREEx.FullScreen.js"></script>
 		<script src="page\extern\three_x\threex.keyboardstate.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
+		 <link rel="stylesheet" href="css/next.css" type="text/css" media="screen">
+
+
 		
 		<link rel="stylesheet" href="css\layout.css">
+		<div id="punkte">
+			Punkte:
+		</div>
 		<script>
 		
 		/// Globale Variable für die SetIntervall-Funktion
@@ -21,7 +28,7 @@
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
 			var points = 0;
-			
+			document.getElementById("punkte").innerHTML += points;
 			
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -177,16 +184,20 @@
 			var skyMat = new THREE.MeshPhongMaterial({color : "#0bc236", specular: "#c8ecd0", emissive: "#089329", side: THREE.BackSide});
 			var sky = new THREE.Mesh(skyGeom, skyMat);
 			scene.add(sky);
+	
+	// Punkte
 			
-			var score = document.createElement("div");
+		/*
+	var score = document.createElement("div");
 			score.style.top = 100 + "px";
 			score.style.right = 200 + "px";
 			score.style.position = "absolute";
 			score.style.color = "white";
-			score.innerHTML = "Score: " + points;
+			score.innerHTML = "Punkte: " + points;
 			score.style.fontSize = 250 + "%";
 			
 			document.body.appendChild(score);
+*/
 		
 			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
 			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("myTexture.jpg"), side: THREE.DoubleSide});		
@@ -383,7 +394,7 @@
                                 snake.addCube();
                                 ding.play();
                                 points += 20;
-                                score.innerHTML = "Score: " + points; 
+                                document.getElementById("punkte").innerHTML = "Punkte: " + points; 
                                 var changecolor = setInterval(function(){
 									if(this.checkcolor)
 									{
@@ -476,7 +487,7 @@
 		/// Level up
 		function levelup()
 		{
-			if(points ==100)
+			if(points ==60)
 			{
 				gewonnen();
 				clearInterval(levelInt);		
@@ -701,8 +712,7 @@
              function gameOver()
              	{
                    spielen = false; 
-                   document.getElementById("go").style.display = "block";
-                   document.getElementById("button").style.display = "block";
+                   document.getElementById("verlierer").style.display = "block";
                            
                 }
                         
@@ -712,8 +722,7 @@
              function gewonnen()
              	{
                    spielen = false; 
-                   document.getElementById("win").style.display = "block";
-                   document.getElementById("button").style.display = "block";              
+                   document.getElementById("gewinner").style.display = "block";
                 }
                 var spielen = true;
 
@@ -769,13 +778,22 @@
 				trap.cylinder.position.x += 1;			
 			};
 			spear();
+		
 */
 		</script>
-        <h1 id="go">Verloren</h1>
-        <button id="button" onclick="window.location.href='01spiel.html'">Erneut spielen</button>
-                 
-		<h1 id="win">Gewonnen</h1>
-		<button id="button" onclick="window.location.href='01spiel.html'">Nächstes Spiel</button>
+		
+		<div id="gewinner">		
+		<ul>
+		<li><a href="01spiel.html" class="round green">WIN<span class="round">Naechstes Spiel</span></a></li>
+		</ul>
+		</div>
+	
+		<div id="verlierer">		
+		<ul>
+		<li><a href="01spiel.html" class="round red">Lose<span class="round">Erneuert spielen</span></a></li>
+		</ul>
+		</div>
+
 
 	</body>
 </html>

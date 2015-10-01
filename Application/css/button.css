@@ -176,11 +176,18 @@
 	#logo{
 		float: inherit;
 		margin: auto;
-		padding: inherit;
+		/*
+width: 200px;
+		height: 300px;
+*/
 	}
 	
 	#allestufen{
 		display: none;
 	}
 	
+	#logo2{
+		float: inherit;
+		margin: auto;
+	}
 	

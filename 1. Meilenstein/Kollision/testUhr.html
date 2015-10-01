@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
  <head>
+     
     <input class="stopwatch" id="stopwatch" type="text" value="0:0:0"><br>
     <input class="button" id="startandstopbutton" type="button" value="Start/Stop" onclick="startandstop();"><br>
     <input class="button" id="marklapbutton" type="button" value="Split/Mark Lap" onclick="marklap();"><br>
     <input class="button" id="resetbutton" type="button" value="Reset Stopwatch" onclick="resetstopwatch();"><br>
     <textarea class="lap" id="lapdetails"></textarea>
-</head>
+
 <script>
 var stopwatch;
     var runningstate = 0; // 1 means the timecounter is running 0 means counter stopped
@@ -111,6 +112,7 @@ else
 stopwatch.value = "0:0:0";
   }
  }
+ 
  function formattedtime(unformattedtime)
   { 
    var decisec = Math.floor(unformattedtime/100) + '';
@@ -124,7 +126,7 @@ return hour + ":" + minute + ':' + second;
 
 </script>
 
-
+</head>
 <body onload="startTime()">
 
 <div id="txt"></div>

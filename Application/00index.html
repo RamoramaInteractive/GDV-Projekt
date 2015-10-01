@@ -16,17 +16,19 @@
 </div>
 
 <script>
-		var pressStufen = true;
+		var e = true;
 		
 			function pressStufen() 
 		    	{
-		    		if(pressStufen == true)
+		    		if(e == true)
 		    		{
-		    		     document.getElementById("levelbutton").style.display = "block";
+		    		     document.getElementById("allestufen").style.display = "none";
+						 e = false;
 					}
 					else
 					{
-					     document.getElementById("levelbutton").style.display = "none";
+					     document.getElementById("allestufen").style.display = "block";
+						 e = true;
 
 					}
 				}	
@@ -34,29 +36,11 @@
 <div>
 	<ul>
 		<li><a href="01spiel.html" class="round green">Spielen<span class="round">Entdecke die Welt mit Nimmersatt! </span></a></li>
-		<li><a> <button onclick="pressStufen()" class="round red">Stufen<span class="round">Such den grad der Schwierigkeit aus. </span></a></li>
+		<li><a onclick="pressStufen()" class="round red">Stufen<span class="round">Such den grad der Schwierigkeit aus. </span></a></li>
 		<li><a href="04info.html" class="round yellow">Info<span class="round">Welches Team steckt dahinter?</span></a></li>
 	</ul> 
 </div>
 
-
-<div>
-	<a href="01spiel.html" id="levelbutton">
-		1
-	</a>
-</div>
-<div>
-	<a>
-		2
-	</a>
-</div>
-<div>
-	<a>
-		3
-	</a>
-</div>
-
-<!--
 <div id="allestufen">
 	<div stufe1>
 			<li><a href="01spiel.html" class="round grey">1<span class="round">Entdecke die Welt mit Nimmersatt! </span></a></li>
@@ -70,7 +54,6 @@
 			<li><a href="03spiel.html" class="round grey">3<span class="round">Es regnet Felsen!</span></a></li>
 	</div>
 </div> 	
--->
 	
 		
 

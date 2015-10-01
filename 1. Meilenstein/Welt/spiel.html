@@ -8,9 +8,11 @@
         <script src="..\..\Application\page\extern\three_js\build\three.min.js"></script>		
         <script src="..\..\Application\page\extern\three_x\THREEx.FullScreen.js"></script>
         <script src="..\..\Application\page\extern\three_x\threex.keyboardstate.js"></script>
+		<script src="..\..\Application\page\extern\three_js\examples\js\controls\OrbitControls.js"></script>
         <link rel="stylesheet" href="layout.css">
         <script>
 
+			var controls;
             /// Globale Variable für die SetIntervall-Funktion
             var time;
             var seconds = 180;
@@ -28,6 +30,7 @@
             document.body.appendChild(renderer.domElement);
             renderer.shadowMapEnabled = true;
             renderer.shadowMapSoft = true;
+
 
             /*
              Hier fängt jetzt die Speerfalle an!
@@ -552,37 +555,6 @@
                         // G
                         THREEx.FullScreen.request();
                         break;
-                    case 72:
-                        // H
-                        if (camera.rotation.z <= 0.785 && camera.position.y == 50)
-                        {
-                            camera.rotation.z -= -0.01;
-                        }
-                        else if (camera.position.y == 25)
-                        {
-                            camera.rotation.y -= -0.01;
-                        }
-                        break;
-                    case 75:
-                        // K
-                        // Um Y-Achse gegen den Uhrzeigersinn drehen
-                        if (camera.rotation.z >= -0.785 && camera.position.y == 50)
-                        {
-                            camera.rotation.z -= +0.01;
-                        }
-                        else if (camera.position.y == 25)
-                        {
-                            camera.rotation.y -= +0.01;
-                        }
-                        break;
-                    case 77:
-                        // M
-                        // Um X-Achse runter rotieren
-                        break;
-                    case 85:
-                        // U	
-                        //Um X-Achse hoch rotieren!
-                        break;
                     case 86:
                         // V
                         changeCameraTrans(0, 50, 0);
@@ -678,12 +650,22 @@
                 }
 
             }, 20000);
+			
+			controls = new THREE.OrbitControls( camera );
+			controls.addEventListener( 'change', render );
+			
             var render = function () {
                 requestAnimationFrame(render);
                 renderer.render(scene, camera);
                 renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+				controls.update();
+				controls.minPolarAngle = 0; // radians
+				controls.maxPolarAngle = Math.PI/4; 
+				controls.noKeys = true;
             };
+			
             render();
+			
             var spear = function () {
                 requestAnimationFrame(spear);
                 trap.move(snake);

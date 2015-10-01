@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nimmersatt v 1.0</title>
+  <link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="jquery.2.1.1.min.js"></script>
+  <script src='js/three.min.js'></script>
+  <script src="js/threex.keyboardstate.js"></script>
+  <script src="js/THREEx.FullScr6een.js"></script>
+  <script src="js/threex.videotexture.js"></script>
+</head>
+<body>
+<div id="logo">
+		<img src="img/info.png" alt="Logo"/>
+</div>
+
+<script>
+		var e = false;
+		
+			function pressStufen() 
+		    	{
+		    		if(e == true)
+		    		{
+		    		     document.getElementById("allestufen").style.display = "none";
+						 e = false;
+					}
+					else
+					{
+					     document.getElementById("allestufen").style.display = "block";
+						 e = true;
+
+					}
+				}	
+</script>
+<div>
+	<ul>
+		<li><a href="01spiel.html" class="round green">Spielen<span class="round">Entdecke die Welt mit Nimmersatt! </span></a></li>
+		<li><a onclick="pressStufen()" class="round red">Stufen<span class="round">Such den grad der Schwierigkeit aus. </span></a></li>
+		<li><a href="04info.html" class="round yellow">Info<span class="round">Welches Team steckt dahinter?</span></a></li>
+	</ul> 
+</div>
+
+<div id="allestufen">
+	<div stufe1>
+			<li><a href="01spiel.html" class="round grey">1<span class="round">Entdecke die Welt mit Nimmersatt! </span></a></li>
+	</div>
+		
+	<div stufe2>
+			<li><a href="02spiel.html" class="round grey">2<span class="round">Pass auf die Speerfallen auf!</span></a></li>
+	</div>	
+
+	<div stufe3>
+			<li><a href="03spiel.html" class="round grey">3<span class="round">Es regnet Felsen!</span></a></li>
+	</div>
+</div> 	
+	
+		
+
+</body>
+</html>

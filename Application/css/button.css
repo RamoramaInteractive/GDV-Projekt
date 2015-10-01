@@ -92,13 +92,24 @@
 		-o-transform: rotate(-360deg);
 		transform: rotate(-360deg);
 	}
-
+	
+	a.grey{
+		background-color: rgba(220,220,220,1);
+		color: rgba(0,0,0,1);
+		border-color: rgba(143,140,140,1);
+/* 		display: none; */
+	}
+	
+		a.grey:hover{
+		color: rgba(197,197,197,1);
+	}
+	
 	a.red {
 		background-color: rgba(50,126,240,1);
 		color: rgba(0,0,0,1);
 		border-color: rgba(50,126,240,1);
 	}
-
+	
 	a.red:hover {
 		color: rgba(50,126,240,1);
 	}
@@ -144,9 +155,13 @@
 		-o-text-shadow: 0 1px 1px rgba(0,0,0,.5);
 		text-shadow: 0 1px 1px rgba(0,0,0,.5);	
 	}
-
+	
+	.grey span{
+		background: rgba(143,140,140,1);
+	}
+	
 	.green span {
-		background: rgba(25,181,20,0.7);		
+		background: rgba(196,180,180,1);		
 	}
 
 	.red span {
@@ -155,14 +170,25 @@
 
 	.yellow span {
 		background: rgba(161,145,0,.7);	
-
 	}
+
 	
 	#logo{
-
-
-float: inherit;
-margin: auto;
-padding: inherit;
-		
+		float: inherit;
+		margin: auto;
+		padding: inherit;
 	}
+/*
+	
+	#allestufen{
+		display: none;
+	}
+*/
+	
+	#levelbutton{
+		color: white;
+		font-size: x-large;
+	}
+	
+	
+	

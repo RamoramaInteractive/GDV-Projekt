@@ -1,0 +1,936 @@
+<html>
+    <head>	
+        <title>Nimmersatts Welt</title>
+    </head>
+
+    <body>
+        <script src="page\extern\ThreeCSG.js"></script>
+        <script src="page\extern\three_js\build\three.min.js"></script>		
+        <script src="page\extern\three_x\THREEx.FullScreen.js"></script>
+        <script src="page\extern\three_x\threex.keyboardstate.js"></script>
+        <script src="page\extern\three_js\examples\js\controls\OrbitControls.js"></script>
+        <!-- 		<link href='http://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'> -->
+        <link rel="stylesheet" href="css/next.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/layout.css">		
+        <div id="transbox">
+            <div id="ton">
+                <image id="change"onclick="myFunction()" type="img" src="img/soundOn.png" alt="soundOn" width="26" height="24"/>
+            </div>
+
+            <div id="spiel">
+                <!-- 			<img src="img/game.png" alt="game" width="16" height="16" /> -->
+                Spiel:
+            </div>
+
+            <div id="punkte">
+                <!-- 			<img src="img/star.png" alt="star" width="16" height="16" /> -->
+                Punkte:
+            </div>
+        </div>
+
+
+        <script>
+
+            var controls;
+            /// Globale Variable für die SetIntervall-Funktion
+            var time;
+            var seconds = 180;
+            var ding = new Audio("sound/chomp.wav");
+            /* 			var pillesound = new Audio("sound/pille.mp3"); */
+            var backgroundsound1 = new Audio("sound/spiel1.mp3");
+            var cameraTransVect = new THREE.Vector3(0, 50, 0);
+            var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
+            var points = 0;
+            document.getElementById("punkte").innerHTML += points;
+
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            renderer.shadowMapEnabled = true;
+            renderer.shadowMapSoft = true;
+            backgroundsound1.loop = true;
+            backgroundsound1.play();
+            var soundoff = true;
+
+
+            function myFunction()
+            {
+                if (soundoff == true)
+                {
+                    document.getElementById("change").setAttribute("src", "img/soundOff.png");
+                    soundoff = false;
+                    backgroundsound1.pause();
+                }
+                else
+                {
+                    document.getElementById("change").setAttribute("src", "img/soundOn.png");
+                    soundoff = true;
+                    backgroundsound1.play();
+                }
+
+            }
+
+            ///Anfang- Gestaltung der Umgebung 
+
+            loader = new THREE.JSONLoader();
+
+            //erster Baum 
+            loader.load('img/Baum.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/Hyophorbe_lagenicaulis_dif.jpg'),
+                });
+
+
+                function erzeugeBaum(posx, posz)
+                {
+
+                    baueme = new THREE.Mesh(geometry, material);
+
+                    baueme.position.x = posx;
+                    baueme.position.z = posz;
+                    baueme.position.y = 3;
+                    baueme.scale.x = baueme.scale.y = baueme.scale.z = 0.1;
+
+                    scene.add(baueme);
+
+                }
+                ;
+
+                //Hinten
+                erzeugeBaum(-100, -50);
+                erzeugeBaum(-90, -47);
+                erzeugeBaum(-80, -49);
+                erzeugeBaum(-70, -45);
+                erzeugeBaum(-60, -50);
+                erzeugeBaum(-50, -40);
+                erzeugeBaum(-40, -47);
+                erzeugeBaum(-30, -50);
+                erzeugeBaum(-20, -45);
+                erzeugeBaum(-10, -45);
+                erzeugeBaum(0, -50);
+
+                erzeugeBaum(90, -47);
+                erzeugeBaum(80, -49);
+                erzeugeBaum(70, -45);
+                erzeugeBaum(60, -50);
+                erzeugeBaum(50, -40);
+                erzeugeBaum(40, -47);
+                erzeugeBaum(30, -50);
+                erzeugeBaum(20, -45);
+                erzeugeBaum(10, -45);
+
+                erzeugeBaum(-100, -35);
+                erzeugeBaum(-90, -20);
+                erzeugeBaum(-80, -30);
+                erzeugeBaum(-70, -25);
+                erzeugeBaum(-60, -30);
+                erzeugeBaum(-50, -20);
+                erzeugeBaum(-40, -33);
+                erzeugeBaum(-30, -25);
+                erzeugeBaum(-20, -35);
+                erzeugeBaum(-10, -22);
+                erzeugeBaum(0, -30);
+
+                erzeugeBaum(90, -20);
+                erzeugeBaum(80, -35);
+                erzeugeBaum(70, -27);
+                erzeugeBaum(60, -23);
+                erzeugeBaum(50, -33);
+                erzeugeBaum(40, -21);
+                erzeugeBaum(30, -37);
+                erzeugeBaum(20, -20);
+                erzeugeBaum(10, -28);
+                erzeugeBaum(5, -20);
+
+                //Links und Rechts
+                erzeugeBaum(-100, -20);
+                erzeugeBaum(-90, -17);
+                erzeugeBaum(-80, -14);
+                erzeugeBaum(-70, -10);
+                erzeugeBaum(-60, -5);
+                erzeugeBaum(-50, -3);
+                erzeugeBaum(-40, 0);
+
+                erzeugeBaum(100, 3);
+                erzeugeBaum(90, 7);
+                erzeugeBaum(80, 10);
+                erzeugeBaum(70, 9);
+                erzeugeBaum(60, 15);
+                erzeugeBaum(50, 17);
+                erzeugeBaum(40, 18);
+
+                erzeugeBaum(-100, 20);
+                erzeugeBaum(-90, 17);
+                erzeugeBaum(-80, 14);
+                erzeugeBaum(-70, 10);
+                erzeugeBaum(-60, 5);
+                erzeugeBaum(-50, 3);
+                erzeugeBaum(-40, 0);
+
+                erzeugeBaum(100, -3);
+                erzeugeBaum(90, -7);
+                erzeugeBaum(80, -10);
+                erzeugeBaum(70, -9);
+                erzeugeBaum(60, -15);
+                erzeugeBaum(50, -17);
+                erzeugeBaum(40, -18);
+
+            });
+            //zweiter Baum 
+            loader.load('img/tree.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/tree.png'),
+                });
+                
+              function erzeugeTree(posx, posz)
+                {
+                    tree = new THREE.Mesh(geometry, material);
+                    tree.position.y = 3;
+                    tree.position.x = posx;
+                    tree.position.z = posz;
+                    scene.add(tree);
+                    tree.scale.x = tree.scale.y = tree.scale.z = 2;
+                }
+
+                //Hintere reihe 
+                erzeugeTree(-95, -49);
+                erzeugeTree(-85, -44);
+                erzeugeTree(-75, -50);
+                erzeugeTree(-65, -47);
+                erzeugeTree(-55, -41);
+                erzeugeTree(-45, -50);
+                erzeugeTree(-35, -44);
+                erzeugeTree(-25, -40);
+                erzeugeTree(-15, -50);
+                erzeugeTree(-5, -43);
+
+                erzeugeTree(95, -49);
+                erzeugeTree(85, -44);
+                erzeugeTree(75, -50);
+                erzeugeTree(65, -47);
+                erzeugeTree(55, -41);
+                erzeugeTree(45, -50);
+                erzeugeTree(35, -44);
+                erzeugeTree(25, -40);
+                erzeugeTree(15, -50);
+                erzeugeTree(5, -43);
+
+                //Links und Rechts 
+
+                erzeugeTree(-95, -20);
+                erzeugeTree(-85, -17);
+                erzeugeTree(-75, -14);
+                erzeugeTree(-75, -10);
+                erzeugeTree(-65, -5);
+                erzeugeTree(-55, -3);
+                erzeugeTree(-45, 0);
+
+                erzeugeTree(95, 3);
+                erzeugeTree(85, 7);
+                erzeugeTree(75, 10);
+                erzeugeTree(65, 9);
+                erzeugeTree(55, 15);
+                erzeugeTree(45, 17);
+                erzeugeTree(40, 18);
+
+                erzeugeTree(40, 20);
+                erzeugeTree(45, 17);
+                erzeugeTree(55, 14);
+                erzeugeTree(65, 10);
+                erzeugeTree(75, 5);
+                erzeugeTree(85, 3);
+                erzeugeTree(95, 0);
+
+                erzeugeTree(95, -3);
+                erzeugeTree(85, -7);
+                erzeugeTree(75, -10);
+                erzeugeTree(65, -9);
+                erzeugeTree(55, -15);
+                erzeugeTree(45, -17);
+                erzeugeTree(40, -18);
+
+            });
+
+            //Busch
+            
+//            loader.load('img/grass.js', function (geometry, materials) {
+//                var material = new THREE.MeshLambertMaterial({
+//                    map: THREE.ImageUtils.loadTexture('img/grass.png'),
+//                });
+//                
+//                busch = new THREE.Mesh(geometry, materials);
+//                busch.position.y =3;
+//                scene.add(busch);
+//                busch.scale.x = busch.scale.y = busch.scale.z = 1;
+                
+                
+   // });
+            
+            ///Ende - Gestaltung der Umgebung
+
+
+
+
+
+            ///Hier fängt jetzt die Speerfalle an!
+
+            /*
+             
+             function SpearTrap (scene)
+             {
+             this.cylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 60, 32));
+             this.pole = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 20, 32), 
+             new THREE.MeshPhongMaterial({color: "#90730f", specular: "#9c7e19", emissive: "#110e02"}));
+             this.spear = new THREE.Mesh(new THREE.OctahedronGeometry(1),
+             new THREE.MeshPhongMaterial({color: "#999fa5", specular: "#b8c0c8", emissive: "#252728"}));	
+             this.scene = scene;
+             this.pole.castShadow = true;
+             this.pole.receiveShadow = true;
+             this.spear.castShadow = true;
+             this.spear.receiveShadow = true;
+             
+             this.spearSpeed = 0.2;
+             this.spearHit = null;
+             this.spearIndex = this.spearSpeed;
+             
+             this.spear.position.y = 10;
+             this.scene.add(this.pole);
+             this.scene.add(this.spear);		
+             
+             this.setPosition = function(x, z)
+             {
+             if (x == undefined)
+             {
+             this.cylinder.position.x = 0;	
+             this.pole.position.x = 0;	
+             this.spear.position.x = 0;	
+             }
+             else
+             {
+             this.cylinder.position.x = x;	
+             this.pole.position.x = x;	
+             this.spear.position.x = x;				
+             }		
+             
+             if (z == undefined)
+             {
+             this.cylinder.position.z = 0;
+             this.pole.position.z = 0;
+             this.spear.position.z = 0;	
+             }
+             else 
+             {
+             this.cylinder.position.z = z;
+             this.pole.position.z = z;
+             this.spear.position.z = z;
+             }
+             };
+             
+             this.offScene = function()
+             {
+             this.pole.position.x = null;
+             this.pole.position.y = null;
+             this.pole.position.z = null;
+             
+             this.spear.position.x = null;
+             this.spear.position.y = null;
+             this.spear.position.z = null;
+             
+             this.scene.remove(this.pole);
+             this.scene.remove(this.spear);
+             };
+             
+             this.move = function(snake)
+             {
+             if (this.pole.position.y > 2)
+             {
+             this.spearIndex = -(this.spearSpeed);
+             }
+             
+             if (this.pole.position.y > -10)
+             {
+             this.spearHit = true;
+             }
+             
+             if (this.pole.position.y < -10)
+             {
+             this.spearHit = false;
+             }
+             
+             if (this.pole.position.y < -20)
+             {
+             this.spearIndex = this.spearSpeed;
+             }
+             
+             this.pole.position.y += this.spearIndex;
+             this.spear.position.y += this.spearIndex;
+             
+             for (var i = 0; i < snake.cube.length; i++)
+             {
+             if (snake.cube[i].position.x == this.pole.position.x &&
+             snake.cube[i].position.z == this.pole.position.z &&
+             this.spearHit == true)
+             {
+             snake.loose();
+             this.spearSpeed = 0;
+             }
+             }
+             };
+             }
+             
+             function placeTrap(trap, snake, food, pill)
+             {							
+             var x = Math.floor(Math.random() * 67) - 33;
+             var z = Math.floor(Math.random() * 31) - 15;
+             
+             x = x - (x % snake.distance);
+             z = z - (z % snake.distance);
+             
+             trap.setPosition(x, z);
+             
+             for (var i = 0; i < snake.cube.length; i++)
+             {
+             if (snake.cube[i].position.x == trap.pole.position.x &&
+             snake.cube[i].position.z == trap.pole.position.z ||
+             food.position.x == trap.pole.position.x &&
+             food.position.z == trap.pole.position.z ||
+             pill.position.x == trap.pole.position.x &&
+             pill.position.z == trap.pole.position.z)
+             {
+             placeTrap(trap, snake, food, pill);		
+             }
+             }
+             }	
+             
+             var trap = new SpearTrap(scene);
+             
+             */
+
+            /*
+             Hier endet die Speerfalle!
+             */
+
+            var skyGeom = new THREE.BoxGeometry(1000, 1000, 1000);
+            var skyMat = new THREE.MeshPhongMaterial({color: "#0bc236", specular: "#c8ecd0", emissive: "#089329", side: THREE.BackSide});
+            var sky = new THREE.Mesh(skyGeom, skyMat);
+            scene.add(sky);
+            var geometry1 = new THREE.BoxGeometry(70, 35, 2);
+            var material1 = new THREE.MeshPhongMaterial({map: THREE.ImageUtils.loadTexture("myTexture.jpg"), side: THREE.DoubleSide});
+            var geometry2 = new THREE.CylinderGeometry(0, 1, 3);
+            var material2 = new THREE.MeshPhongMaterial({color: "#124608", specular: "#248e0e", emissive: "#0b6b26", shininess: 10, shading: THREE.SmoothShading});
+            var food = new THREE.Mesh(geometry2, material2);
+            food.castShadow = true;
+            food.receiveShadow = true;
+            var geometry3 = new THREE.SphereGeometry(0.8, 32, 32);
+            var material3 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive: "#095e7a", shininess: 10, shading: THREE.SmoothShading});
+            var pill = new THREE.Mesh(geometry3, material3);
+            /*
+             pill.position.y = 3;
+             pill.castShadow = true;
+             pill.receiveShadow = true;
+             pill.position.x = null;
+             pill.position.z = null;	
+             
+             */
+            /// Code für die Steuerung!!!		
+
+
+            ///hinzufügen der Objekte
+
+            var spotLight = new THREE.SpotLight(0xffffff, 2.0);
+            spotLight.position.set(60, 50, 20);
+            spotLight.castShadow = true;
+            spotLight.shadowDarkness = 0.5;
+            spotLight.shadowCameraNear = 5;
+            spotLight.shadowCameraFar = 150;
+            scene.add(spotLight);
+            function Snake(scene, size, distance, direction)
+            {
+                this.cube = [];
+                this.scene = scene;
+                this.geometry = new THREE.BoxGeometry(size, size, size);
+                this.material = new THREE.MeshPhongMaterial({color: "#F5B800", specular: "#FFCC33", emissive: "#3d3a06", shininess: 30, shading: THREE.FlatShading});
+                this.distance = distance;
+                this.direction = direction;
+                this.movingDir = direction;
+                this.checkcolor = true;
+                this.generateSnake = function (length)
+                {
+                    for (var i = 0; i < length; i++)
+                    {
+                        this.cube[i] = new THREE.Mesh(this.geometry, this.material);
+                        if (this.direction == "right")
+                        {
+                            this.cube[i].position.x = -1 * (i * this.distance);
+                            this.cube[i].position.y = 3;
+                            this.cube[i].position.z = 0;
+                            this.cube[i].castShadow = true;
+                            this.cube[i].receiveShadow = false;
+                            this.scene.add(this.cube[i]);
+                        }
+                        else if (this.direction == "left")
+                        {
+                            this.cube[i].position.x = i * this.distance;
+                            this.cube[i].position.y = 3;
+                            this.cube[i].position.z = 0;
+                            this.cube[i].castShadow = true;
+                            this.cube[i].receiveShadow = false;
+                            this.scene.add(this.cube[i]);
+                        }
+                        else if (this.direction == "up")
+                        {
+                            this.cube[i].position.x = 0;
+                            this.cube[i].position.y = 3;
+                            this.cube[i].position.z = i * this.distance;
+                            this.cube[i].castShadow = true;
+                            this.cube[i].receiveShadow = false;
+                            this.scene.add(this.cube[i]);
+                        }
+                        else if (this.direction == "down")
+                        {
+                            this.cube[i].position.x = 0;
+                            this.cube[i].position.y = 3;
+                            this.cube[i].position.z = -1 * (i * this.distance);
+                            this.cube[i].castShadow = true;
+                            this.cube[i].receiveShadow = false;
+                            this.scene.add(this.cube[i]);
+                        }
+                    }
+                };
+                this.move = function ()
+                {
+                    for (var i = this.cube.length - 1; i > 0; i--)
+                    {
+                        this.cube[i].position.x = this.cube[i - 1].position.x;
+                        this.cube[i].position.y = this.cube[i - 1].position.y;
+                        this.cube[i].position.z = this.cube[i - 1].position.z;
+                    }
+
+                    if ((this.direction == "down" && this.movingDir != "up")
+                            || (this.direction == "up" && this.movingDir != "down")
+                            || (this.direction == "left" && this.movingDir != "right")
+                            || (this.direction == "right" && this.movingDir != "left"))
+                        this.movingDir = this.direction;
+                    if (this.movingDir == "right")
+                    {
+                        this.cube[0].position.x += this.distance;
+                    }
+                    else if (this.movingDir == "left")
+                    {
+                        this.cube[0].position.x -= this.distance;
+                    }
+                    else if (this.movingDir == "up")
+                    {
+                        this.cube[0].position.z -= this.distance;
+                    }
+                    else if (this.movingDir == "down")
+                    {
+                        this.cube[0].position.z += this.distance;
+                    }
+                };
+                this.addCube = function ()
+                {
+                    this.cube[this.cube.length] = new THREE.Mesh(this.geometry, this.material);
+                    this.cube[this.cube.length - 1].position.x = 1000;
+                    this.cube[this.cube.length - 1].position.y = 1000;
+                    this.cube[this.cube.length - 1].position.z = 1000;
+                    this.cube[this.cube.length - 1].castShadow = true;
+                    this.cube[this.cube.length - 1].receiveShadow = false;
+                    this.scene.add(this.cube[this.cube.length - 1]);
+                };
+                this.removeCube = function ()
+                {
+                    if (this.cube.length > 3)
+                    {
+                        scene.remove(this.cube.pop());
+                    }
+                };
+                this.loose = function ()
+                {
+                    gameOver();
+                    for (var j = 0; j < this.cube.length; j++)
+                    {
+                        this.cube[j].material.color.setStyle('#a01f12');
+                        this.cube[j].material.specular.setStyle('#c92a1a');
+                        this.cube[j].material.emissive.setStyle('#64150d');
+                    }
+                };
+                this.collision = function ()
+                {
+                    for (var i = 1; i < this.cube.length; i++)
+                    {
+                        if (this.cube[0].position.x == this.cube[i].position.x &&
+                                this.cube[0].position.z == this.cube[i].position.z)
+                        {
+                            //alert("Game Over"); //DummyVersion
+
+                            this.loose();
+                        }
+                    }
+
+                };
+                this.teleport = function ()
+                {
+                    if (snake.cube[0].position.x > 35)
+                    {
+                        snake.cube[0].position.x = -33;
+                    }
+
+                    if (snake.cube[0].position.x < -35)
+                    {
+                        snake.cube[0].position.x = 33;
+                    }
+
+                    if (snake.cube[0].position.z > 17)
+                    {
+                        snake.cube[0].position.z = -15;
+                    }
+
+                    if (snake.cube[0].position.z < -17)
+                    {
+                        snake.cube[0].position.z = 15;
+                    }
+                };
+                this.eatFood = function ()
+                {
+                    if (snake.cube[0].position.z == food.position.z && snake.cube[0].position.x == food.position.x)
+                    {
+                        setFood();
+                        snake.addCube();
+                        ding.play();
+                        points += 20;
+                        document.getElementById("punkte").innerHTML = "Punkte: " + points;
+                        var changecolor = setInterval(function () {
+                            if (this.checkcolor)
+                            {
+                                this.checkcolor = false;
+                                turngreen();
+                            }
+                            else
+                            {
+                                this.checkcolor = true;
+                                turnyellow();
+                            }
+
+                        }, 125);
+                        var stopblinking = setInterval(function () {
+                            clearInterval(changecolor);
+                            clearInterval(stopblinking);
+                            turnyellow();
+                        }
+
+                        , 350);
+                        levelup();
+                    }
+                };
+                /*
+                 this.eatPill = function()
+                 {
+                 if(snake.cube[0].position.z == pill.position.z && snake.cube[0].position.x == pill.position.x)
+                 {
+                 scene.remove(pill);
+                 snake.removeCube();
+                 snake.removeCube();
+                 snake.removeCube();
+                 pillesound.play();
+                 pill.position.x = null;
+                 pill.position.z = null;
+                 var changecolor = setInterval(function(){
+                 if(this.checkcolor)
+                 {
+                 this.checkcolor = false;
+                 turnblue();	                 
+                 }
+                 else
+                 {
+                 this.checkcolor = true;
+                 turnyellow();
+                 }
+                 
+                 }, 125);
+                 
+                 var stopblinking = setInterval(function(){
+                 clearInterval(changecolor);
+                 clearInterval(stopblinking);
+                 turnyellow();
+                 }
+                 
+                 ,850);
+                 }
+                 }   
+                 */
+            }
+
+
+            var snake = new Snake(scene, 3, 3, "left");
+            snake.generateSnake(3);
+            food.position.y = 3;
+            /// fallen platzierung 
+            /* placeTrap(trap, snake, food, pill);	 */
+
+            var board = new THREE.Mesh(geometry1, material1);
+            board.rotation.x = -1.57;
+            board.position.y = 1;
+            /*
+             var board_bsp = new ThreeBSP(board);
+             var cutgeo = trap.cylinder;
+             var substract_bsp = new ThreeBSP(cutgeo);
+             var subtract_bsp = board_bsp.subtract(substract_bsp);
+             */
+
+            /* 			var board = subtract_bsp.toMesh(); */
+            board.receiveShadow = true;
+            board.castShadow = true;
+            //board.material = material1;
+            scene.add(board);
+            /// Level up
+            function levelup()
+            {
+                if (points == 60)
+                {
+                    gewonnen();
+                    clearInterval(levelInt);
+                }
+
+            }
+
+            /// schlange blau einfärben
+            function turnblue()
+            {
+                for (var i = 0; i < snake.cube.length; i++)
+                {
+                    snake.cube[i].material.color.setStyle('#54badc');
+                    snake.cube[i].material.specular.setStyle('#7dd5f2');
+                    snake.cube[i].material.emissive.setStyle('#095e7a');
+                }
+            }
+
+            ///schlange grün einfärben
+            function turngreen()
+            {
+                for (var i = 0; i < snake.cube.length; i++)
+                {
+                    snake.cube[i].material.color.setStyle('#124608');
+                    snake.cube[i].material.specular.setStyle('#248e0e');
+                    snake.cube[i].material.emissive.setStyle('#0b6b26');
+                }
+            }
+            /// schlange gelb einfärben
+            function turnyellow()
+            {
+                for (var i = 0; i < snake.cube.length; i++)
+                {
+                    snake.cube[i].material.color.setStyle('#F5B800');
+                    snake.cube[i].material.specular.setStyle('#FFCC33');
+                    snake.cube[i].material.emissive.setStyle('#3d3a06');
+                }
+            }
+
+
+
+            /// Essen
+            function setFood()
+            {
+                food.position.x = Math.floor(Math.random() * 67) - 33;
+                food.position.z = Math.floor(Math.random() * 31) - 15;
+                food.position.x = food.position.x - (food.position.x % snake.distance);
+                food.position.z = food.position.z - (food.position.z % snake.distance);
+                for (var i = 0; i < snake.cube.length; i++)
+                {
+                    if (snake.cube[i].position.x == food.position.x &&
+                            snake.cube[i].position.z == food.position.z ||
+                            pill.position.x == food.position.x &&
+                            pill.position.z == food.position.z)
+
+
+                            /*
+                             ||
+                             trap.pole.position.x == food.position.x &&
+                             trap.pole.position.z == food.position.z)
+                             */
+                            {
+                                setFood();
+                            }
+                }
+            }
+
+            setFood();
+            scene.add(food);
+            camera.rotation.x = cameraRotVect.x;
+            camera.position.y = cameraTransVect.y;
+            function changeCameraTrans(t1, t2, t3)
+            {
+                cameraTransVect.negate();
+                camera.position.x += cameraTransVect.x;
+                camera.position.y += cameraTransVect.y;
+                camera.position.z += cameraTransVect.z;
+                cameraTransVect.set(t1, t2, t3);
+                camera.position.x = cameraTransVect.x;
+                camera.position.y = cameraTransVect.y;
+                camera.position.z = cameraTransVect.z;
+            }
+
+            function changeCameraRot(r1, r2, r3)
+            {
+                cameraRotVect.negate();
+                camera.rotation.x += cameraRotVect.x;
+                camera.rotation.y += cameraRotVect.y;
+                camera.rotation.z += cameraRotVect.z;
+                cameraRotVect.set(r1, r2, r3);
+                camera.rotation.x = cameraRotVect.x;
+                camera.rotation.y = cameraRotVect.y;
+                camera.rotation.z = cameraRotVect.z;
+            }
+
+            document.body.addEventListener("keydown", function (event)
+            {
+                switch (event.keyCode)
+                {
+                    case 38:
+                    case 87:
+                        snake.direction = "up";
+                        break;
+                    case 40:
+                    case 83:
+                        snake.direction = "down";
+                        break;
+                    case 37:
+                    case 65:
+                        snake.direction = "left";
+                        break;
+                    case 39:
+                    case 68:
+                        snake.direction = "right";
+                        break;
+                    case 71:
+                        // G
+                        THREEx.FullScreen.request();
+                        break;
+                    case 86:
+                        // V
+                        changeCameraTrans(0, 50, 0);
+                        changeCameraRot(-1.57, 0, 0);
+                        break;
+                    case 66:
+                        // B
+
+                        changeCameraRot(-0.9, 0, 0);
+                        changeCameraTrans(0, 25, 25);
+                        break;
+                    default:
+                }
+            });
+            ///funktion der Pille
+            function setPill()
+            {
+
+                pill.position.x = Math.floor(Math.random() * 67 / 2) - 33 / 2;
+                pill.position.z = Math.floor(Math.random() * 31 / 2) - 15 / 2;
+                pill.position.x *= snake.distance;
+                pill.position.z *= snake.distance;
+                pill.position.x = Math.floor(Math.random() * 67) - 33;
+                pill.position.z = Math.floor(Math.random() * 31) - 15;
+                pill.position.x = pill.position.x - (pill.position.x % snake.distance);
+                pill.position.z = pill.position.z - (pill.position.z % snake.distance);
+                for (var i = 0; i < snake.cube.length; i++)
+                {
+                    if (snake.cube[i].position.x == pill.position.x &&
+                            snake.cube[i].position.z == pill.position.z ||
+                            food.position.x == pill.position.x &&
+                            food.position.z == pill.position.z
+
+                            /*
+                             ||
+                             trap.pole.position.x == food.position.x &&
+                             trap.pole.position.z == food.position.z
+                             */)
+                    {
+                        setPill();
+                    }
+                }
+
+            }
+
+            /// Spieler verliert	          
+            function gameOver()
+            {
+                spielen = false;
+                document.getElementById("verlierer").style.display = "block";
+            }
+
+            var spielen = true;
+            /// Spieler gewinnt			          
+            function gewonnen()
+            {
+                spielen = false;
+                document.getElementById("gewinner").style.display = "block";
+            }
+            var spielen = true;
+            /// Ständiger bewegungsmechanismus der Schlange
+            var time = setInterval(function () {
+                if (spielen == true)
+                {
+                    snake.move();
+                }
+                snake.collision();
+                snake.teleport();
+                snake.eatFood();
+                snake.eatPill();
+            }, seconds);
+            /// Pille wird alle .. Sek. angezeigt	
+
+            var timepill = setInterval(function () {
+                if (spielen == true)
+                {
+                    setPill();
+                    scene.add(pill);
+                    var rempill = setInterval(function () {
+                        scene.remove(pill);
+                        pill.position.x = null;
+                        pill.position.z = null;
+                        clearInterval(rempill);
+                    }, 5000);
+                }
+            }, 15000);
+            controls = new THREE.OrbitControls(camera);
+            controls.addEventListener('change', render);
+            var render = function () {
+                requestAnimationFrame(render);
+                renderer.render(scene, camera);
+                renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+                controls.update();
+                controls.minPolarAngle = 0; // radians
+                controls.maxPolarAngle = Math.PI / 4;
+                controls.noKeys = true;
+            }
+
+            render();
+            /*
+             var spear = function () {
+             requestAnimationFrame( spear );				
+             trap.move(snake);
+             trap.cylinder.position.x += 1;			
+             };
+             spear();
+             
+             */
+        </script>
+
+        <div id="gewinner">		
+            <ul>
+                <li><a href="02spiel.html" class="round green">WIN<span class="round">Naechstes Spiel</span></a></li>
+            </ul>
+        </div>
+
+        <div id="verlierer">		
+            <ul>
+                <li><a href="01spiel.html" class="round red">Lose<span class="round">Erneuert spielen</span></a></li>
+            </ul>
+        </div>
+
+
+    </body>
+</html>

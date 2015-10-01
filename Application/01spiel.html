@@ -8,7 +8,7 @@
 		<script src="page\extern\three_js\build\three.min.js"></script>		
 		<script src="page\extern\three_x\THREEx.FullScreen.js"></script>
 		<script src="page\extern\three_x\threex.keyboardstate.js"></script>
-		<link href='http://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
+<!-- 		<link href='http://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'> -->
 		<link rel="stylesheet" href="css/next.css" type="text/css" media="screen">
 		<link rel="stylesheet" href="css/layout.css">
 
@@ -216,21 +216,7 @@
 			var skyMat = new THREE.MeshPhongMaterial({color : "#0bc236", specular: "#c8ecd0", emissive: "#089329", side: THREE.BackSide});
 			var sky = new THREE.Mesh(skyGeom, skyMat);
 			scene.add(sky);
-	
-	// Punkte
-			
-		/*
-	var score = document.createElement("div");
-			score.style.top = 100 + "px";
-			score.style.right = 200 + "px";
-			score.style.position = "absolute";
-			score.style.color = "white";
-			score.innerHTML = "Punkte: " + points;
-			score.style.fontSize = 250 + "%";
-			
-			document.body.appendChild(score);
-*/
-		
+					
 			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
 			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("myTexture.jpg"), side: THREE.DoubleSide});		
 			
@@ -822,7 +808,7 @@
 		
 		<div id="gewinner">		
 		<ul>
-		<li><a href="01spiel.html" class="round green">WIN<span class="round">Naechstes Spiel</span></a></li>
+		<li><a href="02spiel.html" class="round green">WIN<span class="round">Naechstes Spiel</span></a></li>
 		</ul>
 		</div>
 	

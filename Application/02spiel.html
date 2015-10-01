@@ -189,9 +189,8 @@
 					}
 				}
 		};
-	}
-
-	function placeTrap(trap, snake, food, pill)
+		
+	this.placeTrap = function (snake, food, pill)
 	{							
 		var x = Math.floor(Math.random() * 67) - 33;
 		var z = Math.floor(Math.random() * 31) - 15;
@@ -199,23 +198,32 @@
 		x = x - (x % snake.distance);
 		z = z - (z % snake.distance);
 		
-		trap.setPosition(x, z);
+		this.setPosition(x, z);
 		
 		for (var i = 0; i < snake.cube.length; i++)
 		{
-			if (snake.cube[i].position.x == trap.pole.position.x &&
-				snake.cube[i].position.z == trap.pole.position.z ||
-				food.position.x == trap.pole.position.x &&
-				food.position.z == trap.pole.position.z ||
-				pill.position.x == trap.pole.position.x &&
-				pill.position.z == trap.pole.position.z)
+			if (snake.cube[i].position.x == this.pole.position.x &&
+				snake.cube[i].position.z == this.pole.position.z ||
+				snake.cube[i].position.x + 5 >= this.pole.position.x &&
+				snake.cube[i].position.z + 5 >= this.pole.position.z ||
+				snake.cube[i].position.x - 5 <= this.pole.position.x &&
+				snake.cube[i].position.z - 5 <= this.pole.position.z ||				
+				food.position.x == this.pole.position.x &&
+				food.position.z == this.pole.position.z ||
+				pill.position.x == this.pole.position.x &&
+				pill.position.z == this.pole.position.z)
 			{
-				placeTrap(trap, snake, food, pill);		
+				this.placeTrap(snake, food, pill);		
 			}
 		}
-	}	
+	};
+}
+	var trap = [];
 	
-	var trap = new SpearTrap(scene);
+	for (var i = 0; i < 5; i++)
+	{
+		trap[i] = new SpearTrap(scene);
+	}
 	
 	
 /*
@@ -230,6 +238,7 @@
 			var geometry1 = new THREE.BoxGeometry(70, 35, 2);
 			var material1 = new THREE.MeshPhongMaterial({map : THREE.ImageUtils.loadTexture("myTexture.jpg"), side: THREE.DoubleSide});		
 			var board = new THREE.Mesh(geometry1, material1);
+			board.receiveShadow = true;
 			scene.add(board);	
 			
 			var geometry2 = new THREE.CylinderGeometry(0, 1, 3);
@@ -501,7 +510,11 @@
 	food.position.y = 3;
 
 		/// fallen platzierung 
-		placeTrap(trap, snake, food, pill);	
+		
+		for (var i = 0; i < 5; i++)
+		{
+			trap[i].placeTrap(snake, food, pill);	
+		}
 	
 
 	
@@ -555,7 +568,7 @@
 	
 		/// Essen
 			function setFood()
-			{													
+			{			
 				food.position.x = Math.floor(Math.random() * 67) - 33;
 				food.position.z = Math.floor(Math.random() * 31) - 15;
 				
@@ -568,8 +581,16 @@
 						snake.cube[i].position.z == food.position.z ||
 						pill.position.x == food.position.x &&
 						pill.position.z == food.position.z ||
-						trap.pole.position.x == food.position.x &&
-						trap.pole.position.z == food.position.z)
+						trap[0].pole.position.x == food.position.x &&
+						trap[0].pole.position.z == food.position.z ||
+						trap[1].pole.position.x == food.position.x &&
+						trap[1].pole.position.z == food.position.z ||
+						trap[2].pole.position.x == food.position.x &&
+						trap[2].pole.position.z == food.position.z ||
+						trap[3].pole.position.x == food.position.x &&
+						trap[3].pole.position.z == food.position.z ||
+						trap[4].pole.position.x == food.position.x &&
+						trap[4].pole.position.z == food.position.z)
 					{
 						setFood();
 					}						
@@ -580,6 +601,15 @@
 				
 
 			scene.add(food);
+			trap[0].pole.position.y = -20;
+			trap[0].spear.position.y = -20 + 10;
+			trap[1].pole.position.y = -5;
+			trap[1].spear.position.y = -5 + 10;
+			trap[2].pole.position.y = -10;
+			trap[2].spear.position.y = -10 + 10;
+			trap[3].pole.position.y = 10;
+			trap[3].spear.position.y = 10 + 10;
+
 			
 			
 			camera.rotation.x = cameraRotVect.x;
@@ -656,8 +686,8 @@
              
 		///funktion der Pille
 			function setPill()
-			{							
-	
+			{			
+
 			pill.position.x = Math.floor(Math.random() * 67/2) - 33/2;
 			pill.position.z = Math.floor(Math.random() * 31/2) - 15/2;
 	
@@ -678,13 +708,20 @@
 					snake.cube[i].position.z == pill.position.z ||
 					food.position.x == pill.position.x &&
 					food.position.z == pill.position.z ||
-					trap.pole.position.x == food.position.x &&
-					trap.pole.position.z == food.position.z)
+					trap[0].pole.position.x == food.position.x &&
+					trap[0].pole.position.z == food.position.z ||
+					trap[1].pole.position.x == food.position.x &&
+					trap[1].pole.position.z == food.position.z ||
+					trap[2].pole.position.x == food.position.x &&
+					trap[2].pole.position.z == food.position.z ||
+					trap[3].pole.position.x == food.position.x &&
+					trap[3].pole.position.z == food.position.z ||
+					trap[4].pole.position.x == food.position.x &&
+					trap[4].pole.position.z == food.position.z)
 				{
 						setPill();
 				}							
 			}
-			
 	}	
 	
 		/// Spieler verliert	          
@@ -723,7 +760,7 @@
 			var timepill = setInterval(function(){
 					if (spielen == true)
 					{
-							setPill(); 
+							setPill(trap); 
 							scene.add(pill);	
 							
 							var rempill = setInterval(function() {
@@ -741,11 +778,16 @@
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
-				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+				renderer.setSize(window.innerWidth, window.innerHeight);
 				controls.update();
 				controls.minPolarAngle = 0; // radians
 				controls.maxPolarAngle = Math.PI/4; 
 				controls.noKeys = true;
+				controls.noPan = true;
+				controls.minDistance = 30;
+				controls.maxDistance = 60;
+				controls.minAzimuthAngle = -Math.PI/2
+				controls.maxAzimuthAngle = Math.PI/2
 				}
 				
 				render();	
@@ -753,9 +795,16 @@
 			
 			
 			var spear = function () {
-				requestAnimationFrame( spear );				
-				trap.move(snake);
-				trap.cylinder.position.x += 1;			
+				requestAnimationFrame( spear );		
+				
+				if (spielen == true)
+				{
+					trap[0].move(snake);	
+					trap[1].move(snake);
+					trap[2].move(snake);	
+					trap[3].move(snake);
+					trap[4].move(snake);
+				}					
 			};
 			spear();
 

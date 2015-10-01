@@ -8,10 +8,10 @@
 		<script src="page\extern\three_js\build\three.min.js"></script>		
 		<script src="page\extern\three_x\THREEx.FullScreen.js"></script>
 		<script src="page\extern\three_x\threex.keyboardstate.js"></script>
+		<script src="page\extern\three_js\examples\js\controls\OrbitControls.js"></script>
 <!-- 		<link href='http://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'> -->
 		<link rel="stylesheet" href="css/next.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="css/layout.css">
-
+		<link rel="stylesheet" href="css/layout.css">		
 		<div id="transbox">
 			<div id="ton">
 				<image id="change"onclick="myFunction()" type="img" src="img/soundOn.png" alt="soundOn" width="26" height="24"/>
@@ -30,7 +30,8 @@
 		
 		
 	<script>	
-		    											
+		    						
+			var controls;									
 		/// Globale Variable für die SetIntervall-Funktion
 			var time;
 			var seconds  = 180;
@@ -311,22 +312,22 @@
 				}
 			};
 			
-			this.move = function()
-			{
-				for (var i = this.cube.length - 1; i > 0; i--)
-				{
-					this.cube[i].position.x = this.cube[i - 1].position.x;
-					this.cube[i].position.y = this.cube[i - 1].position.y;
-					this.cube[i].position.z = this.cube[i - 1].position.z;
-				}
-				
+                this.move = function ()
+                {
+                    for (var i = this.cube.length - 1; i > 0; i--)
+                    {
+                        this.cube[i].position.x = this.cube[i - 1].position.x;
+                        this.cube[i].position.y = this.cube[i - 1].position.y;
+                        this.cube[i].position.z = this.cube[i - 1].position.z;
+                    }	
+					
 					if ((this.direction == "down" && this.movingDir != "up")
 						|| (this.direction == "up" && this.movingDir != "down")
 						|| (this.direction == "left" && this.movingDir != "right")
 						|| (this.direction == "right" && this.movingDir != "left"))
 							this.movingDir = this.direction;
 							
-					if (this.movingDir == "right")
+                    if (this.movingDir == "right")
                     {
                         this.cube[0].position.x += this.distance;
                     }
@@ -342,7 +343,7 @@
                     {
                         this.cube[0].position.z += this.distance;
                     }
-			};
+                };
 			
 			this.addCube = function ()
 			{
@@ -626,8 +627,8 @@
 			document.body.addEventListener("keydown", function (event)
 			{
 				switch (event.keyCode)
-				{
-					case 38:
+                {
+                    case 38:
                     case 87:
 							snake.direction = "up";
 							break;
@@ -643,54 +644,23 @@
                     case 68:
 							snake.direction = "right";
 							break;
-					case 71:
-					// G
-							THREEx.FullScreen.request();
-							break;
-					case 72:
-					// H
-						if (camera.rotation.z <= 0.785 && camera.position.y == 50)
-						{
-							camera.rotation.z -= -0.01;
-						}
-						else if (camera.position.y == 25)
-						{
-							camera.rotation.y -= -0.01;
-						}
-						break;
-					case 75:
-					// K
-					// Um Y-Achse gegen den Uhrzeigersinn drehen
-						if (camera.rotation.z >= -0.785 && camera.position.y == 50)
-						{
-							camera.rotation.z -= +0.01;
-						}
-						else if (camera.position.y == 25)
-						{
-							camera.rotation.y -= +0.01;
-						}
-						break;
-					case 77:
-					// M
-					// Um X-Achse runter rotieren
-						break;
-					case 85:
-					// U	
-					//Um X-Achse hoch rotieren!
-						break;
-					case 86:
-					// V
-							changeCameraTrans(0, 50, 0);
-							changeCameraRot(-1.57, 0, 0);
-							break;
-					case 66:
-					// B
+                    case 71:
+                        // G
+                        THREEx.FullScreen.request();
+                        break;
+                    case 86:
+                        // V
+                        changeCameraTrans(0, 50, 0);
+                        changeCameraRot(-1.57, 0, 0);
+                        break;
+                    case 66:
+                        // B
 
-							changeCameraRot(-0.9, 0, 0);
-							changeCameraTrans(0, 25, 25);
-							break;
-					default:
-				}
+                        changeCameraRot(-0.9, 0, 0);
+                        changeCameraTrans(0, 25, 25);
+                        break;
+                    default:
+                }
 			});	
                         
                         
@@ -780,15 +750,17 @@
 					}
 				}, 15000);
 
+			controls = new THREE.OrbitControls( camera );
+			controls.addEventListener( 'change', render );
+			
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
 				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
-				
-				if(backgroundsound1.currentTime==21120)
-				{
-					backgroundsound1.currentTime=0;
-				}
+				controls.update();
+				controls.minPolarAngle = 0; // radians
+				controls.maxPolarAngle = Math.PI/4; 
+				controls.noKeys = true;
 				}
 				
 				render();	

@@ -65,6 +65,7 @@
 			var ding = new Audio("sound/chomp.wav");
 			var pillesound = new Audio("sound/pille.mp3");
 			var backgroundsound1 = new Audio("sound/spiel2.mp3");
+			var applause = new Audio("sound/applaus.wav");
 			var cameraTransVect = new THREE.Vector3(0, 50, 0);
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
 			var points = 0;
@@ -907,6 +908,7 @@ scene.add( spotLight );
 			if(points ==140)
 			{
 				gewonnen();
+				applause.play();
 				clearInterval(levelInt);		
 			}	
 		}

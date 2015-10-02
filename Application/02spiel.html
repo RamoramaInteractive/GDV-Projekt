@@ -549,7 +549,8 @@
 
 
 //Lichtquelle
-     	
+ 
+
 		var spotLight = new THREE.SpotLight( 0xffffff,2.0 );
 		spotLight.position.set(60, 50, 20);
   
@@ -559,7 +560,8 @@
 		spotLight.shadowCameraFar = 150;
   
 		scene.add( spotLight );
-		
+
+/*
 		var spotLight = new THREE.SpotLight( 0xffffff );
 		spotLight.position.set( 100, 1000, 100 );
 
@@ -571,7 +573,7 @@
 		spotLight.shadowCameraFar = 4000;
 		spotLight.shadowCameraFov = 30;
 		scene.add( spotLight );
-		
+*/		
 		function Snake (scene, size, distance, direction)
 		{
 			this.cube = [];
@@ -1092,7 +1094,7 @@
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
-				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setSize(window.innerWidth-20, window.innerHeight-20);
 				controls.update();
 				controls.minPolarAngle = 0; // radians
 				controls.maxPolarAngle = Math.PI/4; 

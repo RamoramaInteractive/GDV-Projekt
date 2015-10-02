@@ -59,6 +59,7 @@
 	<script>	
 		    						
 /// Globale Variable für die SetIntervall-Funktion
+			var movingCam = true; 
 			var controls;									
 			var time;
 			var seconds  = 180;
@@ -1016,8 +1017,8 @@
 		        		spielen = true;
 					}
 	        	}
-        	}    
-                        
+        	}    	
+			
 /// Ständiger bewegungsmechanismus der Schlange
 			var time = setInterval(function() {
                             if(spielen == true)
@@ -1053,11 +1054,16 @@
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
-				renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+				renderer.setSize(window.innerWidth-20, window.innerHeight-20);
 				controls.update();
 				controls.minPolarAngle = 0; // radians
 				controls.maxPolarAngle = Math.PI/4; 
 				controls.noKeys = true;
+				controls.noPan = true;
+				controls.minDistance = 30;
+				controls.maxDistance = 60;
+				controls.minAzimuthAngle = -Math.PI/2
+				controls.maxAzimuthAngle = Math.PI/2
 				}
 				
 				render();	

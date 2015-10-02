@@ -718,7 +718,7 @@ function animateCamera()
             var render = function () {
                 requestAnimationFrame(render);
                 renderer.render(scene, camera);
-                renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+                renderer.setSize(window.innerWidth, window.innerHeight);
 				animateCamera();
             };
             render();

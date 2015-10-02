@@ -31,8 +31,8 @@
 		
 	<script>	
 		    						
-			var controls;									
 		/// Globale Variable für die SetIntervall-Funktion
+			var controls;									
 			var time;
 			var seconds  = 180;
 			var ding = new Audio("sound/chomp.wav");
@@ -42,6 +42,7 @@
 			var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
 			var points = 0;
 			document.getElementById("punkte").innerHTML += points;
+			document.getElementById("spiel").innerHTML += 1;
 			
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );

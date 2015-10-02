@@ -189,5 +189,51 @@ width: 200px;
 	#logo2{
 		float: inherit;
 		margin: auto;
-	}
+		width: 1100px;
+		height: 300px;	}
+		
+		
+	#myText1{
+		color: white;
+		width: 800px;
+		margin: 100px;
+		margin-top: auto;
+		margin-left: 300px;
+		background-color: grey;
+		border: 3px solid yellow;
+		border-width: 5px;
+		}
+		
+	#myText2{
+		color: white;
+		width: 800px;
+		margin: 100px;
+		margin-top: auto;
+		margin-left: 300px;
+		background-color: grey;
+		border: 3px solid yellow;
+		border-width: 5px;
+
+		}
+		
+	#myText3{
+		color: white;
+		width: 800px;
+		margin: 100px;
+		margin-top: auto;
+		margin-left: 300px;
+		background-color: grey;
+		border: 3px solid yellow;
+		border-width: 5px;
+
+		}
+		
+	#not{
+		float: inherit;
+		margin: auto;
+		width: 200px;
+		height: 250px;
+		}
+	
+	
 	

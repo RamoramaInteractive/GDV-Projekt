@@ -162,27 +162,27 @@
                 erzeugeBaum(50, 17);
                 erzeugeBaum(40, 18);
 
-                erzeugeBaum(-100, 20);
-                erzeugeBaum(-90, 17);
-                erzeugeBaum(-80, 14);
-                erzeugeBaum(-70, 10);
-                erzeugeBaum(-60, 5);
-                erzeugeBaum(-50, 3);
-                erzeugeBaum(-40, 0);
+                erzeugeBaum(-99, 20);
+                erzeugeBaum(-89, 17);
+                erzeugeBaum(-85, 14);
+                erzeugeBaum(-73, 10);
+                erzeugeBaum(-67, 5);
+                erzeugeBaum(-52, 3);
+                erzeugeBaum(-46, 0);
 
                 erzeugeBaum(100, -3);
-                erzeugeBaum(90, -7);
-                erzeugeBaum(80, -10);
-                erzeugeBaum(70, -9);
-                erzeugeBaum(60, -15);
-                erzeugeBaum(50, -17);
-                erzeugeBaum(40, -18);
+                erzeugeBaum(97, -7);
+                erzeugeBaum(86, -10);
+                erzeugeBaum(73, -9);
+                erzeugeBaum(62, -15);
+                erzeugeBaum(58, -17);
+                erzeugeBaum(42, -18);
 
             });
             //zweiter Baum 
-            loader.load('img/tree.js', function (geometry, materials) {
+            loader.load('img/grass.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
-                    map: THREE.ImageUtils.loadTexture('img/tree.png'),
+                    map: THREE.ImageUtils.loadTexture('img/petal.png'),
                 });
                 
               function erzeugeTree(posx, posz)
@@ -193,6 +193,7 @@
                     tree.position.z = posz;
                     scene.add(tree);
                     tree.scale.x = tree.scale.y = tree.scale.z = 2;
+                    
                 }
 
                 //Hintere reihe 

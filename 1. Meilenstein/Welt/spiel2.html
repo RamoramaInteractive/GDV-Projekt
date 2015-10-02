@@ -15,8 +15,8 @@
             var time;
             var seconds = 180;
             var ding = new Audio("chomp.wav");
-            var cameraTransVect = new THREE.Vector3(0, 50, 0);
-            var cameraRotVect = new THREE.Vector3(-1.57, 0, 0);
+            var cameraTransVect = new THREE.Vector3(0, 100, 0);
+            var cameraRotVect = new THREE.Vector3(0, 0, 0);
             var points = 0;
 
 
@@ -249,7 +249,7 @@
             spotLight.shadowCameraFar = 150;
             scene.add(spotLight);
 			
-            function Snake(scene, size, distance, direction)
+function Snake(scene, size, distance, direction)
             {
                 this.cube = [];
                 this.scene = scene;
@@ -259,8 +259,6 @@
                 this.direction = direction;
 				this.movingDir = direction;
                 this.checkcolor = true;
-				
-					
                 this.generateSnake = function (length)
                 {
                     for (var i = 0; i < length; i++)
@@ -304,16 +302,6 @@
                         }
                     }
                 };
-				
-				this.changeDir = function()
-				{
-					if ((this.direction == "down" && this.movingDir != "up")
-						|| (this.direction == "up" && this.movingDir != "down")
-						|| (this.direction == "left" && this.movingDir != "right")
-						|| (this.direction == "right" && this.movingDir != "left"))
-							this.movingDir = this.direction;
-				};
-				
                 this.move = function ()
                 {
                     for (var i = this.cube.length - 1; i > 0; i--)
@@ -321,14 +309,8 @@
                         this.cube[i].position.x = this.cube[i - 1].position.x;
                         this.cube[i].position.y = this.cube[i - 1].position.y;
                         this.cube[i].position.z = this.cube[i - 1].position.z;
-                    }	
-					
-					if ((this.direction == "down" && this.movingDir != "up")
-						|| (this.direction == "up" && this.movingDir != "down")
-						|| (this.direction == "left" && this.movingDir != "right")
-						|| (this.direction == "right" && this.movingDir != "left"))
-							this.movingDir = this.direction;
-							
+                    }
+
                     if (this.movingDir == "right")
                     {
                         this.cube[0].position.x += this.distance;
@@ -346,7 +328,6 @@
                         this.cube[0].position.z += this.distance;
                     }
                 };
-				
                 this.addCube = function ()
                 {
                     this.cube[this.cube.length] = new THREE.Mesh(this.geometry, this.material);
@@ -524,6 +505,7 @@
             scene.add(food);
             camera.rotation.x = cameraRotVect.x;
             camera.position.y = cameraTransVect.y;
+			
             function changeCameraTrans(t1, t2, t3)
             {
                 cameraTransVect.negate();
@@ -548,61 +530,29 @@
                 camera.rotation.z = cameraRotVect.z;
             }
 
-            document.body.addEventListener("keypress", function (event)
+			document.body.addEventListener("keydown", function (event)
             {
-										
                 switch (event.keyCode)
                 {
                     case 38:
                     case 87:
-							snake.direction = "up";
+							snake.movingDir = "up";
 							break;
                     case 40:
-                    case 83:
-							snake.direction = "down";
+                    case 88:
+							snake.movingDir = "down";
 							break;
                     case 37:
                     case 65:
-							snake.direction = "left";
+							snake.movingDir = "left";
 							break;
                     case 39:
                     case 68:
-							snake.direction = "right";
+							snake.movingDir = "right";
 							break;
                     case 71:
                         // G
                         THREEx.FullScreen.request();
-                        break;
-                    case 72:
-                        // H
-                        if (camera.rotation.z <= 0.785 && camera.position.y == 50)
-                        {
-                            camera.rotation.z -= -0.01;
-                        }
-                        else if (camera.position.y == 25)
-                        {
-                            camera.rotation.y -= -0.01;
-                        }
-                        break;
-                    case 75:
-                        // K
-                        // Um Y-Achse gegen den Uhrzeigersinn drehen
-                        if (camera.rotation.z >= -0.785 && camera.position.y == 50)
-                        {
-                            camera.rotation.z -= +0.01;
-                        }
-                        else if (camera.position.y == 25)
-                        {
-                            camera.rotation.y -= +0.01;
-                        }
-                        break;
-                    case 77:
-                        // M
-                        // Um X-Achse runter rotieren
-                        break;
-                    case 85:
-                        // U	
-                        //Um X-Achse hoch rotieren!
                         break;
                     case 86:
                         // V
@@ -644,7 +594,9 @@
                 }
 
             }
-
+			
+			
+			
 
 
             function gameOver()
@@ -698,10 +650,76 @@
                 }
 
             }, 20000);
+			
+			var movingCam = true; 
+			spielen = false;
+	
+/*	
+			function animateCamera()
+			{
+				if (movingCam == true)
+				{
+				if (camera.rotation.x > -1.57 && movingCam)
+				{
+					camera.rotation.x -= 0.1;
+				}
+				else
+				{
+					camera.rotation.x = -1.57;
+					
+					if (camera.rotation.x == -1.57 && camera.position.y > 50 && movingCam)
+					{
+						camera.position.y -= 1;
+					}
+					else if (camera.rotation.x == -1.57 && camera.position.y == 50 && movingCam)
+					{
+						movingCam = false; 
+						spielen = true;
+						cameraTransVect.set(0, 50, 0);
+						cameraRotVect.set(-1.57, 0, 0);
+					}
+				}
+				}
+			}
+		*/	
+		
+		                    
+function animateCamera()
+			{
+				if (movingCam == true)
+				{
+					if (camera.rotation.x > -0.9 && movingCam)
+					{	
+						camera.rotation.x -= 0.01;
+					}
+					else
+					{
+						camera.rotation.x = -0.9;
+					}
+					
+					if (camera.rotation.x == -0.9 && camera.position.y > 25 && movingCam)
+					{
+						camera.position.y -= 1;
+					}
+					else if (camera.position.z < 25 && movingCam)
+					{
+						camera.position.z += 1;
+					}
+					else if (camera.rotation.x == -0.9 && camera.position.y == 25 && movingCam)
+					{
+						movingCam = false; 
+						spielen = true;
+						cameraTransVect.set(0, 25, 25);
+						cameraRotVect.set(-0.9, 0, 0);
+					}
+				}
+			}			
+
             var render = function () {
                 requestAnimationFrame(render);
                 renderer.render(scene, camera);
                 renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+				animateCamera();
             };
             render();
             var spear = function () {

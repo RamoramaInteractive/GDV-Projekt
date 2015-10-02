@@ -180,9 +180,9 @@
 
             });
             //zweiter Baum 
-            loader.load('img/grass.js', function (geometry, materials) {
+            loader.load('img/tree.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
-                    map: THREE.ImageUtils.loadTexture('img/petal.png'),
+                    map: THREE.ImageUtils.loadTexture('img/tree.pgn'),
                 });
                 
               function erzeugeTree(posx, posz)
@@ -254,7 +254,87 @@
                 erzeugeTree(40, -18);
 
             });
+            
+            //Bär 
+             loader.load('img/bear.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/bear.tga'),
+                });
+                
+              
+                    bear = new THREE.Mesh(geometry, material);
+                    bear.position.y = 3;
+                    bear.position.x = 0;
+                    bear.position.z = -16;
+                    scene.add(bear);
+                    bear.scale.x = bear.scale.y = bear.scale.z = 0.3;
+                    
+                
+                
+               
+            });
+            
+            //Tiger
+//              loader.load('img/tiger.js', function (geometry, materials) {
+//                var material = new THREE.MeshLambertMaterial({
+//                    map: THREE.ImageUtils.loadTexture('img/tiger.tif'),
+//                });
+//                
+//              
+//                    baer = new THREE.Mesh(geometry, material);
+//                    baer.position.y = 3;
+//                    baer.position.x = 0;
+//                    baer.position.z = 0 //-16;
+//                    scene.add(baer);
+//                    baer.scale.x = baer.scale.y = baer.scale.z = 10;
+//                    
+//                
+//                
+//                  });
 
+    
+              //Adler 
+                   
+             loader.load('img/adler.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/adler.tif'),
+                });
+            
+                    adler = new THREE.Mesh(geometry, material);
+                    adler.position.y = 15;
+                    adler.position.x = -34;
+                    adler.position.z = -17;
+                    adler.rotation.y = 0.5;
+                    scene.add(adler);
+                    adler.scale.x = adler.scale.y = adler.scale.z = 10;
+                    
+                
+                
+               
+            });
+            
+            
+            
+              //Adler 
+                   
+             loader.load('img/ber.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/BEAR_KDK.TIF'),
+                });
+            
+                    adler = new THREE.Mesh(geometry, material);
+                    adler.position.y = 3;
+                    adler.position.x = 33;
+                    adler.position.z = -17;
+                    adler.rotation.y = -0.3;
+                    scene.add(adler);
+                    adler.scale.x = adler.scale.y = adler.scale.z = 4;
+                    
+                
+                
+               
+            });
+            
             //Busch
             
 //            loader.load('img/grass.js', function (geometry, materials) {

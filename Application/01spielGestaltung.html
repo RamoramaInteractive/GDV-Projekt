@@ -322,38 +322,34 @@
                     map: THREE.ImageUtils.loadTexture('img/BEAR_KDK.TIF'),
                 });
             
-                    adler = new THREE.Mesh(geometry, material);
-                    adler.position.y = 3;
-                    adler.position.x = 36;
-                    adler.position.z = 0;
-                    adler.rotation.y = -1.57; 
-                    scene.add(adler);
-                    adler.scale.x = adler.scale.y = adler.scale.z = 4;
+                    ber = new THREE.Mesh(geometry, material);
+                    ber.position.y = 3;
+                    ber.position.x = 36;
+                   ber.position.z = 0;
+                    ber.rotation.y = -1.57; 
+                    scene.add(ber);
+                    ber.scale.x = ber.scale.y = ber.scale.z = 4;
                     
                 
                 
                
             });
             
-        //Test
-//        
-//              loader.load('img/rasen.js', function (geometry, materials) {
-//                var material = new THREE.MeshLambertMaterial({
-//                    map: THREE.ImageUtils.loadTexture('img/rasen.png'),
-//                });
-//                
-//              
-//                    baer = new THREE.Mesh(geometry, material);
-//                    baer.position.y = 3;
-//                    baer.position.x = 0;
-//                    baer.position.z = 0 ;
-//                    scene.add(baer);
-//                    baer.scale.x = baer.scale.y = baer.scale.z = 10;
-//                    
-//                
-//                
-//                  });
+             
             
+     var spotLight = new THREE.SpotLight( 0xffffff );
+spotLight.position.set( 100, 1000, 100 );
+
+spotLight.castShadow = true;
+
+spotLight.shadowMapWidth = 1024;
+spotLight.shadowMapHeight = 1024;
+
+spotLight.shadowCameraNear = 500;
+spotLight.shadowCameraFar = 4000;
+spotLight.shadowCameraFov = 30;
+
+scene.add( spotLight );
 
    
             

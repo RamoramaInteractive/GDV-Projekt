@@ -72,7 +72,285 @@
 						backgroundsound1.play();
 					}
 					
-				}					
+				}
+                                
+                                
+                                   ///Anfang- Gestaltung der Umgebung 
+
+            loader = new THREE.JSONLoader();
+
+            //erster Baum 
+            loader.load('img/Baum.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/Hyophorbe_lagenicaulis_dif.jpg'),
+                });
+
+
+                function erzeugeBaum(posx, posz)
+                {
+
+                    baueme = new THREE.Mesh(geometry, material);
+
+                    baueme.position.x = posx;
+                    baueme.position.z = posz;
+                    baueme.position.y = 3;
+                    baueme.scale.x = baueme.scale.y = baueme.scale.z = 0.1;
+
+                    scene.add(baueme);
+
+                }
+                ;
+
+                //Hinten
+                //erzeugeBaum(-100, -50);
+                //erzeugeBaum(-90, -47);
+                //erzeugeBaum(-80, -49);
+                //erzeugeBaum(-70, -45);
+                erzeugeBaum(-60, -50);
+                erzeugeBaum(-50, -40);
+               // erzeugeBaum(-40, -47);
+                erzeugeBaum(-30, -50);
+               // erzeugeBaum(-20, -45);
+                erzeugeBaum(-10, -45);
+               // erzeugeBaum(0, -50);
+
+               // erzeugeBaum(90, -47);
+               // erzeugeBaum(80, -49);
+                erzeugeBaum(70, -45);
+                erzeugeBaum(60, -50);
+                //erzeugeBaum(50, -40);
+                erzeugeBaum(40, -47);
+                //erzeugeBaum(30, -50);
+                erzeugeBaum(20, -45);
+                erzeugeBaum(10, -45);
+
+               // erzeugeBaum(-100, -35);
+                //erzeugeBaum(-90, -20);
+                //erzeugeBaum(-80, -30);
+                //erzeugeBaum(-70, -25);
+                //erzeugeBaum(-60, -30);
+                erzeugeBaum(-50, -20);
+                erzeugeBaum(-40, -33);
+               // erzeugeBaum(-30, -25);
+                erzeugeBaum(-20, -35);
+               // erzeugeBaum(-10, -22);
+                erzeugeBaum(0, -30);
+
+                //erzeugeBaum(90, -20);
+                //erzeugeBaum(80, -35);
+                erzeugeBaum(70, -27);
+                erzeugeBaum(60, -23);
+               // erzeugeBaum(50, -33);
+                erzeugeBaum(40, -21);
+               // erzeugeBaum(30, -37);
+                erzeugeBaum(20, -20);
+                erzeugeBaum(10, -28);
+                erzeugeBaum(5, -20);
+
+                //Links und Rechts
+               // erzeugeBaum(-100, -20);
+                erzeugeBaum(-90, -17);
+                //erzeugeBaum(-80, -14);
+                erzeugeBaum(-70, -10);
+               // erzeugeBaum(-60, -5);
+                erzeugeBaum(-50, -3);
+                erzeugeBaum(-40, 0);
+
+               // erzeugeBaum(100, 3);
+                erzeugeBaum(90, 7);
+               // erzeugeBaum(80, 10);
+                erzeugeBaum(70, 9);
+                erzeugeBaum(60, 15);
+                erzeugeBaum(50, 17);
+               // erzeugeBaum(40, 18);
+
+                //erzeugeBaum(-99, 20);
+                erzeugeBaum(-89, 17);
+              //  erzeugeBaum(-85, 14);
+                erzeugeBaum(-73, 10);
+                erzeugeBaum(-67, 5);
+                erzeugeBaum(-52, 3);
+                erzeugeBaum(-46, 0);
+
+               // erzeugeBaum(100, -3);
+                erzeugeBaum(97, -7);
+               // erzeugeBaum(86, -10);
+               // erzeugeBaum(73, -9);
+                erzeugeBaum(62, -15);
+                //erzeugeBaum(58, -17);
+                erzeugeBaum(42, -18);
+
+            });
+            //zweiter Baum 
+            loader.load('img/tree.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/tree.pgn'),
+                });
+                
+              function erzeugeTree(posx, posz)
+                {
+                    tree = new THREE.Mesh(geometry, material);
+                    tree.position.y = 3;
+                    tree.position.x = posx;
+                    tree.position.z = posz;
+                    scene.add(tree);
+                    tree.scale.x = tree.scale.y = tree.scale.z = 2;
+                    
+                }
+
+                //Hintere reihe 
+                //erzeugeTree(-95, -49);
+                erzeugeTree(-85, -44);
+                //erzeugeTree(-75, -50);
+                erzeugeTree(-65, -47);
+                erzeugeTree(-55, -41);
+                //erzeugeTree(-45, -50);
+                erzeugeTree(-35, -44);
+                erzeugeTree(-25, -40);
+                erzeugeTree(-15, -50);
+                erzeugeTree(-5, -43);
+
+               // erzeugeTree(95, -49);
+                erzeugeTree(85, -44);
+                erzeugeTree(75, -50);
+                //erzeugeTree(65, -47);
+                erzeugeTree(55, -41);
+                erzeugeTree(45, -50);
+               // erzeugeTree(35, -44);
+                erzeugeTree(25, -40);
+                erzeugeTree(15, -50);
+                erzeugeTree(5, -43);
+
+                //Links und Rechts 
+
+                //erzeugeTree(-95, -20);
+                erzeugeTree(-85, -17);
+                erzeugeTree(-75, -14);
+                erzeugeTree(-75, -10);
+                erzeugeTree(-65, -5);
+                erzeugeTree(-55, -3);
+                erzeugeTree(-45, 0);
+
+               // erzeugeTree(95, 3);
+                erzeugeTree(85, 7);
+                erzeugeTree(75, 10);
+                erzeugeTree(65, 9);
+                erzeugeTree(55, 15);
+                erzeugeTree(45, 17);
+                erzeugeTree(40, 18);
+
+                erzeugeTree(40, 20);
+                erzeugeTree(45, 17);
+                erzeugeTree(55, 14);
+                erzeugeTree(65, 10);
+                //erzeugeTree(75, 5);
+                erzeugeTree(85, 3);
+                //erzeugeTree(95, 0);
+
+                //erzeugeTree(95, -3);
+                //erzeugeTree(85, -7);
+                //erzeugeTree(75, -10);
+                erzeugeTree(65, -9);
+                erzeugeTree(55, -15);
+                erzeugeTree(45, -17);
+                erzeugeTree(40, -18);
+
+            });
+            
+            //Bär 
+             loader.load('img/bear.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/bear.tga'),
+                });
+                
+              
+                    bear = new THREE.Mesh(geometry, material);
+                    bear.position.y = 3;
+                    bear.position.x = 0;
+                    bear.position.z = -16;
+                    scene.add(bear);
+                    bear.scale.x = bear.scale.y = bear.scale.z = 0.3;
+                    
+                
+                
+               
+            });
+            
+
+
+    
+              //Adler 
+                   
+             loader.load('img/adler.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/adler.tif'),
+                });
+            
+                    adler = new THREE.Mesh(geometry, material);
+                    adler.position.y = 15;
+                    adler.position.x = -34;
+                    adler.position.z = -17;
+                    adler.rotation.y = 0.5;
+                    scene.add(adler);
+                    adler.scale.x = adler.scale.y = adler.scale.z = 10;
+                    
+                
+                
+               
+            });
+            
+            
+            
+              //stehender Bär  
+                   
+             loader.load('img/ber.js', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('img/BEAR_KDK.TIF'),
+                });
+            
+                    ber = new THREE.Mesh(geometry, material);
+                    ber.position.y = 3;
+                    ber.position.x = 36;
+                   ber.position.z = 0;
+                    ber.rotation.y = -1.57; 
+                    scene.add(ber);
+                    ber.scale.x = ber.scale.y = ber.scale.z = 4;
+                    
+                
+                
+               
+            });
+            
+             
+            
+     var spotLight = new THREE.SpotLight( 0xffffff );
+spotLight.position.set( 100, 1000, 100 );
+
+spotLight.castShadow = true;
+
+spotLight.shadowMapWidth = 1024;
+spotLight.shadowMapHeight = 1024;
+
+spotLight.shadowCameraNear = 500;
+spotLight.shadowCameraFar = 4000;
+spotLight.shadowCameraFov = 30;
+
+scene.add( spotLight );
+
+// Sand-Plane			
+			var sandGeom = new THREE.PlaneGeometry(1000, 1000);
+			var sandText = THREE.ImageUtils.loadTexture("sand2.jpg");
+			sandText.wrapS = THREE.RepeatWrapping;
+			sandText.wrapT = THREE.RepeatWrapping;
+			sandText.repeat.set(500, 400);
+			var sandMat = new THREE.MeshPhongMaterial({map: THREE.ImageUtils.loadTexture("sand.jpg"), side: THREE.DoubleSide});
+			var sand = new THREE.Mesh(sandGeom, sandMat);
+			sand.rotation.x = -1.57;
+			scene.add(sand);
+
+   
+            
+            ///Ende - Gestaltung der Umgebung
 		
 
 

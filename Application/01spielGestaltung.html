@@ -509,6 +509,17 @@
             var geometry3 = new THREE.SphereGeometry(0.8, 32, 32);
             var material3 = new THREE.MeshPhongMaterial({color: "#54badc", specular: "#7dd5f2", emissive: "#095e7a", shininess: 10, shading: THREE.SmoothShading});
             var pill = new THREE.Mesh(geometry3, material3);
+
+// Sand-Plane			
+			var sandGeom = new THREE.PlaneGeometry(1000, 1000);
+			var sandText = THREE.ImageUtils.loadTexture("sand2.jpg");
+			sandText.wrapS = THREE.RepeatWrapping;
+			sandText.wrapT = THREE.RepeatWrapping;
+			sandText.repeat.set(500, 400);
+			var sandMat = new THREE.MeshPhongMaterial({map: THREE.ImageUtils.loadTexture("sand.jpg"), side: THREE.DoubleSide});
+			var sand = new THREE.Mesh(sandGeom, sandMat);
+			sand.rotation.x = -1.57;
+			scene.add(sand);
             /*
              pill.position.y = 3;
              pill.castShadow = true;

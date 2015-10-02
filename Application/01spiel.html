@@ -28,10 +28,37 @@
 			</div>
 		</div>
 		
-		
+		<div id="startbox">
+			<div>
+			<h3>Tastatursteuerung f&uumlr das Spiel:</h3>
+			</div>
+			<div id="info">
+			</br>
+			Leerzeichen = Pause</br>
+			</br>
+			&larr; oder A = Links</br>
+			&rarr; oder D = Rechts</br>
+			&uarr; oder W = Hoch </br>
+			&darr; oder S = Runter</br>
+			</br>
+			</br>
+			G = Vollbild</br>
+			V = Vogelperspektive</br>
+			B = Seitenansicht</br>
+			</br>
+			</br>
+			Mausrad = Zoom</br>
+			linke Maus = Ansicht &auml;ndern</br>
+			</br>	
+			</br>	
+			</div>
+			<font color="red">Zum Spielen die Leertaste dr&uuml;cken</font>
+			</br>
+			</br>
+		</div>		
 	<script>	
 		    						
-		/// Globale Variable für die SetIntervall-Funktion
+/// Globale Variable für die SetIntervall-Funktion
 			var controls;									
 			var time;
 			var seconds  = 180;
@@ -55,6 +82,8 @@
 			backgroundsound1.loop = true;
 			backgroundsound1.play();
 			var soundoff = true;
+			var spielen =false;
+			var dead = false;
 
 			
 			function myFunction() 
@@ -73,13 +102,12 @@
 					}
 					
 				}
-                                
-                                
-                                   ///Anfang- Gestaltung der Umgebung 
+                                                       
+///Anfang- Gestaltung der Umgebung 
 
             loader = new THREE.JSONLoader();
 
-            //erster Baum 
+//erster Baum 
             loader.load('img/Baum.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
                     map: THREE.ImageUtils.loadTexture('img/Hyophorbe_lagenicaulis_dif.jpg'),
@@ -88,19 +116,14 @@
 
                 function erzeugeBaum(posx, posz)
                 {
-
                     baueme = new THREE.Mesh(geometry, material);
-
                     baueme.position.x = posx;
                     baueme.position.z = posz;
                     baueme.position.y = 3;
                     baueme.scale.x = baueme.scale.y = baueme.scale.z = 0.1;
-
                     scene.add(baueme);
-
-                }
-                ;
-
+                };
+                
                 //Hinten
                 //erzeugeBaum(-100, -50);
                 //erzeugeBaum(-90, -47);
@@ -179,12 +202,12 @@
                 erzeugeBaum(62, -15);
                 //erzeugeBaum(58, -17);
                 erzeugeBaum(42, -18);
-
             });
-            //zweiter Baum 
+            
+//zweiter Baum 
             loader.load('img/tree.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
-                    map: THREE.ImageUtils.loadTexture('img/tree.pgn'),
+                    map: THREE.ImageUtils.loadTexture('img/tree.png'),
                 });
                 
               function erzeugeTree(posx, posz)
@@ -193,9 +216,8 @@
                     tree.position.y = 3;
                     tree.position.x = posx;
                     tree.position.z = posz;
-                    scene.add(tree);
                     tree.scale.x = tree.scale.y = tree.scale.z = 2;
-                    
+                                        scene.add(tree);         
                 }
 
                 //Hintere reihe 
@@ -224,6 +246,7 @@
                 //Links und Rechts 
 
                 //erzeugeTree(-95, -20);
+
                 erzeugeTree(-85, -17);
                 erzeugeTree(-75, -14);
                 erzeugeTree(-75, -10);
@@ -231,6 +254,7 @@
                 erzeugeTree(-55, -3);
                 erzeugeTree(-45, 0);
 
+///links
                // erzeugeTree(95, 3);
                 erzeugeTree(85, 7);
                 erzeugeTree(75, 10);
@@ -247,9 +271,9 @@
                 erzeugeTree(85, 3);
                 //erzeugeTree(95, 0);
 
-                //erzeugeTree(95, -3);
-                //erzeugeTree(85, -7);
-                //erzeugeTree(75, -10);
+                erzeugeTree(95, -3);
+                erzeugeTree(85, -7);
+                erzeugeTree(75, -10);
                 erzeugeTree(65, -9);
                 erzeugeTree(55, -15);
                 erzeugeTree(45, -17);
@@ -257,35 +281,26 @@
 
             });
             
-            //Bär 
+//Bär 
              loader.load('img/bear.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
                     map: THREE.ImageUtils.loadTexture('img/bear.tga'),
                 });
-                
-              
                     bear = new THREE.Mesh(geometry, material);
                     bear.position.y = 3;
                     bear.position.x = 0;
                     bear.position.z = -16;
                     scene.add(bear);
-                    bear.scale.x = bear.scale.y = bear.scale.z = 0.3;
-                    
-                
-                
-               
+                    bear.scale.x = bear.scale.y = bear.scale.z = 0.3;             
             });
-            
-
+           
 
     
-              //Adler 
-                   
+//Adler                    
              loader.load('img/adler.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
                     map: THREE.ImageUtils.loadTexture('img/adler.tif'),
-                });
-            
+                });         
                     adler = new THREE.Mesh(geometry, material);
                     adler.position.y = 15;
                     adler.position.x = -34;
@@ -293,49 +308,24 @@
                     adler.rotation.y = 0.5;
                     scene.add(adler);
                     adler.scale.x = adler.scale.y = adler.scale.z = 10;
-                    
-                
-                
-               
             });
             
             
             
-              //stehender Bär  
-                   
+//stehender Bär        
              loader.load('img/ber.js', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
                     map: THREE.ImageUtils.loadTexture('img/BEAR_KDK.TIF'),
                 });
-            
                     ber = new THREE.Mesh(geometry, material);
                     ber.position.y = 3;
                     ber.position.x = 36;
                    ber.position.z = 0;
                     ber.rotation.y = -1.57; 
                     scene.add(ber);
-                    ber.scale.x = ber.scale.y = ber.scale.z = 4;
-                    
-                
-                
-               
+                    ber.scale.x = ber.scale.y = ber.scale.z = 4;      
             });
             
-             
-            
-     var spotLight = new THREE.SpotLight( 0xffffff );
-spotLight.position.set( 100, 1000, 100 );
-
-spotLight.castShadow = true;
-
-spotLight.shadowMapWidth = 1024;
-spotLight.shadowMapHeight = 1024;
-
-spotLight.shadowCameraNear = 500;
-spotLight.shadowCameraFar = 4000;
-spotLight.shadowCameraFov = 30;
-
-scene.add( spotLight );
 
 // Sand-Plane			
 			var sandGeom = new THREE.PlaneGeometry(1000, 1000);
@@ -350,11 +340,10 @@ scene.add( spotLight );
 
    
             
-            ///Ende - Gestaltung der Umgebung
+///Ende - Gestaltung der Umgebung
 		
 
-
-		///Hier fängt jetzt die Speerfalle an!
+///Hier fängt jetzt die Speerfalle an!
 		
    /*
              
@@ -488,9 +477,7 @@ scene.add( spotLight );
 	
 */
 	
-/*
-	Hier endet die Speerfalle!
-*/
+//Hier endet die Speerfalle!
 			
 			var skyGeom = new THREE.BoxGeometry(1000, 1000, 1000);
 			var skyMat = new THREE.MeshPhongMaterial({color : "#0bc236", specular: "#c8ecd0", emissive: "#089329", side: THREE.BackSide});
@@ -518,10 +505,10 @@ scene.add( spotLight );
 			pill.position.z = null;	
 			
 */
-		/// Code für die Steuerung!!!		
+/// Code für die Steuerung!!!		
 
 
-   		 ///hinzufügen der Objekte
+///hinzufügen der Objekte
      	
 		var spotLight = new THREE.SpotLight( 0xffffff,2.0 );
 		spotLight.position.set(60, 50, 20);
@@ -531,6 +518,18 @@ scene.add( spotLight );
 		spotLight.shadowCameraNear = 5; 
 		spotLight.shadowCameraFar = 150;
   
+		scene.add( spotLight );
+		
+		var spotLight = new THREE.SpotLight( 0xffffff );
+		spotLight.position.set( 100, 1000, 100 );
+
+		spotLight.castShadow = true;
+		spotLight.shadowMapWidth = 1024;
+		spotLight.shadowMapHeight = 1024;
+
+		spotLight.shadowCameraNear = 500;
+		spotLight.shadowCameraFar = 4000;
+		spotLight.shadowCameraFov = 30;
 		scene.add( spotLight );
 		
 
@@ -772,7 +771,7 @@ scene.add( spotLight );
 	
 	food.position.y = 3;
 
-		/// fallen platzierung 
+/// fallen platzierung 
 		/* placeTrap(trap, snake, food, pill);	 */
 	
 			var board = new THREE.Mesh(geometry1, material1);
@@ -793,10 +792,10 @@ scene.add( spotLight );
 			//board.material = material1;
 			scene.add(board);	
 			
-		/// Level up
+/// Level up
 		function levelup()
 		{
-			if(points ==60)
+			if(points ==140)
 			{
 				gewonnen();
 				clearInterval(levelInt);		
@@ -804,7 +803,7 @@ scene.add( spotLight );
 		
 		}
 	
-		/// schlange blau einfärben
+/// schlange blau einfärben
 		function turnblue()
 		{
 			for(var i = 0; i < snake.cube.length; i++)
@@ -815,7 +814,7 @@ scene.add( spotLight );
 			}
 		}
 				
-		///schlange grün einfärben
+///schlange grün einfärben
 		function turngreen()
 		{
 			for(var i = 0; i < snake.cube.length; i++)
@@ -825,7 +824,7 @@ scene.add( spotLight );
             snake.cube[i].material.emissive.setStyle('#0b6b26');
 			}
 		}
-		/// schlange gelb einfärben
+/// schlange gelb einfärben
 		function turnyellow()
 		{
 			for(var i = 0; i < snake.cube.length; i++)
@@ -836,9 +835,7 @@ scene.add( spotLight );
 			}
 		}
 	
-		
-	
-		/// Essen
+/// Essen
 			function setFood()
 			{													
 				food.position.x = Math.floor(Math.random() * 67) - 33;
@@ -938,13 +935,19 @@ scene.add( spotLight );
                         changeCameraRot(-0.9, 0, 0);
                         changeCameraTrans(0, 25, 25);
                         break;
+                        
+                    case 32:
+                    	//Leertaste für Pause
+						pause();
+						document.getElementById("startbox").style.display="none";
+						break;
                     default:
                 }
 			});	
                         
                         
              
-		///funktion der Pille
+///funktion der Pille
 			function setPill()
 			{							
 	
@@ -981,26 +984,41 @@ scene.add( spotLight );
 			
 	}	
 	
-		/// Spieler verliert	          
+/// Spieler verliert	          
              function gameOver()
              	{
                    spielen = false; 
+                   dead = true;
                    document.getElementById("verlierer").style.display = "block";
                            
-                }
-                        
-                var spielen = true;
-                        
-         /// Spieler gewinnt			          
+                } 
+                
+/// Spieler gewinnt			          
              function gewonnen()
              	{
                    spielen = false; 
+                   dead = true;
                    document.getElementById("gewinner").style.display = "block";
                 }
-                var spielen = true;
-
+                
+        
+/// Spiel wird pausiert
+        	function pause()
+        	{
+	        	if(dead==false)
+	        	{	
+	        		if(spielen==true)
+					{
+	        	 		spielen = false;
+				 	}
+				 	else
+				 	{
+		        		spielen = true;
+					}
+	        	}
+        	}    
                         
-		/// Ständiger bewegungsmechanismus der Schlange
+/// Ständiger bewegungsmechanismus der Schlange
 			var time = setInterval(function() {
                             if(spielen == true)
                             {
@@ -1012,7 +1030,7 @@ scene.add( spotLight );
                                 snake.eatPill();
 			}, seconds);
 			            		
-		/// Pille wird alle .. Sek. angezeigt	
+/// Pille wird alle .. Sek. angezeigt	
 			
 			var timepill = setInterval(function(){
 					if (spielen == true)
@@ -1068,7 +1086,5 @@ scene.add( spotLight );
 		<li><a href="01spiel.html" class="round red">Lose<span class="round">Erneuert spielen</span></a></li>
 		</ul>
 		</div>
-
-
 	</body>
 </html>

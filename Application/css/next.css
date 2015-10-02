@@ -172,7 +172,21 @@
 		background-color: #ffffff;
 		border: 0px solid black;
 		opacity:0.6;
-		filter:alpha(opacity=60); /* For IE8 and earlier */
+		filter:alpha(opacity=60);
+	}
+	
+	#startbox{
+		font-weight: bold;
+		position: absolute;
+		left: 20%;
+		top:27.5%;
+/* 		padding: 20px; */
+		padding-left: 300px;
+		padding-right:300px;
+		background-color: #ffffff;
+		border: 5px solid green;
+		opacity:0.6;
+		filter:alpha(opacity=60); 
 	}
 	
 	#ton{
